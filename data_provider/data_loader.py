@@ -750,15 +750,15 @@ class UEAloader(Dataset):
 
 class Dataset_Cluster_Trace_2018(Dataset):
     def __init__(self, args, root_path, flag='train', size=None,
-                 features='S', data_path='ETTh1.csv',
-                 target='OT', scale=True, timeenc=0, freq='h', seasonal_patterns=None):
+                 features='S', data_path='trainingData.csv',
+                 target='OT', scale=True, timeenc=0, freq='s', seasonal_patterns=None):
         # size [seq_len, label_len, pred_len]
         self.args = args
         # info
-        if size == None:
-            self.seq_len = 24 * 4 * 4
-            self.label_len = 24 * 4
-            self.pred_len = 24 * 4
+        if size == None:  #默认序列为10frames, label为4frames, 预测为3frames
+            self.seq_len = 10
+            self.label_len = 4
+            self.pred_len = 3
         else:
             self.seq_len = size[0]
             self.label_len = size[1]
@@ -789,47 +789,47 @@ class Dataset_Cluster_Trace_2018(Dataset):
         cols = list(df_raw.columns)
         cols.remove(self.target)
         cols.remove('date')
-        df_raw = df_raw[['date'] + cols + [self.target]]
+        df_raw = df_raw[['date'] + cols + [self.target]] #为dataframe重新排序为上述目标列
         num_train = int(len(df_raw) * 0.7)
         num_test = int(len(df_raw) * 0.2)
-        num_vali = len(df_raw) - num_train - num_test
+        num_vali = len(df_raw) - num_train - num_test #划分训练集、验证集、测试集的比例
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
         border2s = [num_train, num_train + num_vali, len(df_raw)]
         border1 = border1s[self.set_type]
-        border2 = border2s[self.set_type]
+        border2 = border2s[self.set_type]  #根据数据集比例划分数据集边界
 
         if self.features == 'M' or self.features == 'MS':
             cols_data = df_raw.columns[1:]
-            df_data = df_raw[cols_data]
+            df_data = df_raw[cols_data]   #选择特征列
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
 
         if self.scale:
             train_data = df_data[border1s[0]:border2s[0]]
             self.scaler.fit(train_data.values)
-            data = self.scaler.transform(df_data.values)
+            data = self.scaler.transform(df_data.values)  #数据归一化
         else:
             data = df_data.values
 
-        df_stamp = df_raw[['date']][border1:border2]
-        df_stamp['date'] = pd.to_datetime(df_stamp.date)
+        df_stamp = df_raw[['date']][border1:border2] #选择时间列
+        df_stamp['date'] = pd.to_datetime(df_stamp.date) #将时间列转换为时间格式
         if self.timeenc == 0:
             df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)
             df_stamp['day'] = df_stamp.date.apply(lambda row: row.day, 1)
             df_stamp['weekday'] = df_stamp.date.apply(lambda row: row.weekday(), 1)
             df_stamp['hour'] = df_stamp.date.apply(lambda row: row.hour, 1)
-            data_stamp = df_stamp.drop(['date'], 1).values
-        elif self.timeenc == 1:
+            data_stamp = df_stamp.drop(['date'], 1).values #将时间列转换为时间特征
+        elif self.timeenc == 1: #时间特征
             data_stamp = time_features(pd.to_datetime(df_stamp['date'].values), freq=self.freq)
             data_stamp = data_stamp.transpose(1, 0)
 
         self.data_x = data[border1:border2]
-        self.data_y = data[border1:border2]
+        self.data_y = data[border1:border2] #数据集
 
-        if self.set_type == 0 and self.args.augmentation_ratio > 0:
-            self.data_x, self.data_y, augmentation_tags = run_augmentation_single(self.data_x, self.data_y, self.args)
+        if self.set_type == 0 and self.args.augmentation_ratio > 0: 
+            self.data_x, self.data_y, augmentation_tags = run_augmentation_single(self.data_x, self.data_y, self.args) 
 
-        self.data_stamp = data_stamp
+        self.data_stamp = data_stamp #时间特征
 
     def __getitem__(self, index):
         s_begin = index

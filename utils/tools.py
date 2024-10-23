@@ -82,13 +82,45 @@ def visual(true, preds=None, name='./pic/test.pdf'):
     """
     Results visualization
     """
-    plt.figure()
+    plt.figure(figsize=(100, 6))
     plt.plot(true, label='GroundTruth', linewidth=2)
     if preds is not None:
         plt.plot(preds, label='Prediction', linewidth=2)
     plt.legend()
     plt.savefig(name, bbox_inches='tight')
 
+def visual_full_scale( trues, preds=None, name='./pic/test.png', mode = 'concate', random = False , sample_num = 5):
+    """
+    Results visualization
+    """
+    assert mode in ['concate', 'test_consistance', ]
+    if random :
+        start_idx = np.random.randint(0, trues.shape[1])
+    else:
+        start_idx = 0
+    plt.figure(figsize=(100, 6))
+    true_line = []
+    pred_line = []
+    if mode == 'concate':
+        for index in range(start_idx, trues.shape[0], trues.shape[1]):
+            true_line.append(trues[index,:,:].squeeze())
+            if preds is not None:
+                pred_line.append(preds[index,:,:].squeeze())
+    elif mode == 'test_consistance':
+        random_idx = np.random.randint(0,preds.shape[0])
+        for index in range(sample_num):
+            plt.plot(preds[random_idx + index, sample_num-index:, :], lable = f'{index}th line',linewidth=2)
+        plt.legend()
+        plt.savefig(name, bbox_inches='tight')
+        return
+    true_line = np.concatenate(true_line)
+    if preds is not None:
+        pred_line = np.concatenate(pred_line)
+    plt.plot(true_line, label='GroundTruth', linewidth=2)
+    if preds is not None:
+        plt.plot(pred_line, label='Prediction', linewidth=2)
+    plt.legend()
+    plt.savefig(name, bbox_inches='tight')
 
 def adjustment(gt, pred):
     anomaly_state = False

@@ -1,6 +1,6 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from utils.tools import EarlyStopping, adjust_learning_rate, visual
+from utils.tools import EarlyStopping, adjust_learning_rate, visual, visual_full_scale
 from utils.metrics import metric
 import torch
 import torch.nn as nn
@@ -228,7 +228,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
         trues = trues.reshape(-1, trues.shape[-2], trues.shape[-1])
         print('test shape:', preds.shape, trues.shape)
-
+        visual_full_scale(trues, preds, os.path.join(folder_path, 'fullScale.pdf'), mode='concate', random=False, sample_num=5)
         # result save
         folder_path = './results/' + setting + '/'
         if not os.path.exists(folder_path):
