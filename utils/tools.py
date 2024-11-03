@@ -89,11 +89,13 @@ def visual(true, preds=None, name='./pic/test.pdf'):
     plt.legend()
     plt.savefig(name, bbox_inches='tight')
 
-def visual_full_scale( trues, preds=None, name='./pic/test.png', mode = 'concate', random = False , sample_num = 5):
+def visual_full_scale(  trues,  preds=None,plot_step = None, name='./pic/test.png', mode = 'concate', random = False , sample_num = 5):
     """
     Results visualization
     """
     assert mode in ['concate', 'test_consistance', ]
+    if plot_step is None:
+        plot_step = trues.shape[0]
     if random :
         start_idx = np.random.randint(0, trues.shape[1])
     else:
@@ -102,23 +104,25 @@ def visual_full_scale( trues, preds=None, name='./pic/test.png', mode = 'concate
     true_line = []
     pred_line = []
     if mode == 'concate':
-        for index in range(start_idx, trues.shape[0], trues.shape[1]):
-            true_line.append(trues[index,:,:].squeeze())
+        for index in range(start_idx, plot_step, trues.shape[1]):
+            # print(trues[index,:,:].shape)
+            true_line.append(trues[index,:,:].squeeze(axis = 1))
+            # print(true_line[-1].shape)
             if preds is not None:
-                pred_line.append(preds[index,:,:].squeeze())
+                pred_line.append(preds[index,:,:].squeeze(axis = 1))
     elif mode == 'test_consistance':
         random_idx = np.random.randint(0,preds.shape[0])
         for index in range(sample_num):
-            plt.plot(preds[random_idx + index, sample_num-index:, :], lable = f'{index}th line',linewidth=2)
+            plt.plot(preds[random_idx + index, sample_num-index:, :].squeeze(axis = 1), label = f'{index}th line',linewidth=2)
         plt.legend()
         plt.savefig(name, bbox_inches='tight')
         return
     true_line = np.concatenate(true_line)
     if preds is not None:
         pred_line = np.concatenate(pred_line)
-    plt.plot(true_line, label='GroundTruth', linewidth=2)
+    plt.plot(list(range(start_idx,start_idx+plot_step)),true_line, label='GroundTruth', linewidth=2)
     if preds is not None:
-        plt.plot(pred_line, label='Prediction', linewidth=2)
+        plt.plot(list(range(start_idx,start_idx+plot_step)),pred_line, label='Prediction', linewidth=2)
     plt.legend()
     plt.savefig(name, bbox_inches='tight')
 

@@ -228,7 +228,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
         trues = trues.reshape(-1, trues.shape[-2], trues.shape[-1])
         print('test shape:', preds.shape, trues.shape)
-        visual_full_scale(trues, preds, os.path.join(folder_path, 'fullScale.pdf'), mode='concate', random=False, sample_num=5)
         # result save
         folder_path = './results/' + setting + '/'
         if not os.path.exists(folder_path):
@@ -262,5 +261,5 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
         np.save(folder_path + 'pred.npy', preds)
         np.save(folder_path + 'true.npy', trues)
-
+        visual_full_scale(trues, preds,plot_step=None,name =  os.path.join(folder_path, 'fullScale.png'), mode='concate', random=False, sample_num=5)
         return
