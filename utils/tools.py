@@ -120,9 +120,11 @@ def visual_full_scale(  trues,  preds=None,plot_step = None, name='./pic/test.pn
     true_line = np.concatenate(true_line)
     if preds is not None:
         pred_line = np.concatenate(pred_line)
-    plt.plot(list(range(start_idx,start_idx+plot_step)),true_line, label='GroundTruth', linewidth=2)
+    plt.plot(list(range(start_idx,len(true_line))),true_line, label='GroundTruth', linewidth=2)
+    print(pred_line.shape)
     if preds is not None:
-        plt.plot(list(range(start_idx,start_idx+plot_step)),pred_line, label='Prediction', linewidth=2)
+        plt.plot(list(range(start_idx,len(true_line))),pred_line, label='Prediction', linewidth=2)
+        print(pred_line.shape)
     plt.legend()
     plt.savefig(name, bbox_inches='tight')
 
