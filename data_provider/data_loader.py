@@ -790,8 +790,12 @@ class Dataset_Cluster_Trace_2018(Dataset):
         cols.remove(self.target)
         cols.remove('date')
         df_raw = df_raw[['date'] + cols + [self.target]] #为dataframe重新排序为上述目标列
-        num_train = int(len(df_raw) * 0.7)
-        num_test = int(len(df_raw) * 0.2)
+        num_train = int(len(df_raw) * 5 / 7)
+        num_test = int(len(df_raw) / 7)
+        # df_test = df_raw[(df_raw['date'] >= '2024-10-29 00:00:00') & (df_raw['date'] < '2024-11-03 00:00:00')]
+        # num_train = len(df_test)
+        # df_vali = df_raw[(df_raw['date'] >= '2024-11-03 00:00:00') & (df_raw['date'] < '2024-11-04 00:00:00')]
+        # num_test = len(df_vali)
         num_vali = len(df_raw) - num_train - num_test #划分训练集、验证集、测试集的比例
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
         border2s = [num_train, num_train + num_vali, len(df_raw)]

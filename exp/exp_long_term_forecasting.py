@@ -157,7 +157,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 break
 
             adjust_learning_rate(model_optim, epoch + 1, self.args)
-
+        wandb.log({"last_vali_loss": vali_loss, "last_test_loss": test_loss})
         # wandb.log_artifact(self.model)
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))

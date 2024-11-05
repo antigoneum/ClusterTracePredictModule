@@ -10,8 +10,37 @@ from utils.print_args import print_args
 import random
 import numpy as np
 import wandb
+import time
 
-if __name__ == '__main__':
+sweep_config = {
+    "method": "bayes",
+    "name": "ClusterTracePredictModul_Sweep_grid_lr_after_dateEmbed",
+    "metric": {"name": "last_vali_loss", "goal": "minimize"},
+    "parameters": {
+        # "batch_size": {"values": [64, 128]},  
+        # "learning_rate": {"values": [0.0001, 0.0005, 0.001, 0.002, 0.005, 0.01,0.02,0.05,0.1]},  #学习率
+        "learning_rate": {"max": 0.1, "min": 0.0001, "distribution": "uniform"},
+        # "seq_len": {"values": [64, 16]},  #历史数据长度
+        "seq_len": {"max": 128, "min": 16, "distribution": "q_log_uniform_values", "q":2},
+        # "e_layers": {"values": [2, 3]},   #
+        "e_layers": {"max": 4, "min":1, "distribution": "int_uniform"},   #
+        # "d_model": {"values": [64, 128]},  #卷积层输入的通道数  自编码器
+        "d_model": {"max": 128, "min": 32, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器
+        # "d_ff": {"values": [16, 32]},    #卷积层输出的通道数  自编码器
+        "d_ff": {"max": 32, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器
+        # "dropout": {"values": [0.1]}, #dropout
+        "dropout": {"max": 0.5, "min": 0.1, "distribution": "uniform"}, #dropout
+        # "num_kernel": {"values": [10, 8,5]},  #卷积核的数量
+        "num_kernel": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
+        # "train_epochs": {"values": [30, 50]},  #训练的轮数
+        "top_k": {"max" : 20, "min": 3, "distribution": "int_uniform"} ,  #top_k
+    }
+    
+}
+
+sweep_id = wandb.sweep(sweep_config, project="ClusterTracePredictModule_sweep_BAYES")
+
+def main():
     fix_seed = 2021
     random.seed(fix_seed)
     torch.manual_seed(fix_seed)
@@ -19,11 +48,11 @@ if __name__ == '__main__':
     args = argparse.Namespace(
         task_name='long_term_forecast',
         is_training=1,
-        model_id='test_wandb',
+        model_id='wandb_BAYES',
         model='TimesNet',
         data= 'CT2018',
-        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/',
-        data_path='task_type1_CTPF_10_60_date.csv',
+        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/',
+        data_path='task_type1_CTPF_8640_6912_date.csv',
         features='S',
         target='count',
         freq='s',
@@ -32,21 +61,21 @@ if __name__ == '__main__':
         label_len=1,
         pred_len=1,
         seasonal_patterns='Monthly',
-        inverse=True,
+        inverse=True,   #是否对数据进行还原
         mask_rate=0.25,
         anomaly_ratio=0.25,
         expand=2,
         d_conv=4,
         top_k=8,
-        num_kernels=10,
-        enc_in=1,
+        num_kernels=10,   #卷积核的数量
+        enc_in=1,     #数据的特征维度
         dec_in=1,
         c_out=1,
-        d_model=64,
+        d_model=64,   #卷积层输出的通道数
         n_heads=8,
-        e_layers=4,
+        e_layers=2,   #timesBlock的数量
         d_layers=1,
-        d_ff=256,
+        d_ff=16,     #卷积层输出的通道数
         moving_avg=25,
         factor=3,
         distil=True,
@@ -62,13 +91,13 @@ if __name__ == '__main__':
         seg_len=48,
         num_workers=10,
         itr=1,
-        train_epochs=30,
+        train_epochs=20,
         batch_size=128,
         patience=3,
         learning_rate=0.0001,
         des='test',
         loss='MSE',
-        lradj='type1',
+        lradj='type1',    #学习率调整方式 type1砍半, type2按字典调整
         use_amp=False,
         use_gpu=True,
         gpu=0,
@@ -96,158 +125,6 @@ if __name__ == '__main__':
         discsdtw=False,
         extra_tag="",
     )
-
-
-    # parser = argparse.ArgumentParser(description='TimesNet')
-
-    # # basic config
-    # parser.add_argument('--task_name', type=str, required=True, default='long_term_forecast',
-    #                     help='task name, options:[long_term_forecast, short_term_forecast, imputation, classification, anomaly_detection]')
-    # parser.add_argument('--is_training', type=int, required=True, default=1, help='status')
-    # parser.add_argument('--model_id', type=str, required=True, default='test', help='model id')
-    # parser.add_argument('--model', type=str, required=True, default='Autoformer',
-    #                     help='model name, options: [Autoformer, Transformer, TimesNet]')
-
-    # # data loader
-    # parser.add_argument('--data', type=str, required=True, default='ETTm1', help='dataset type')
-    # parser.add_argument('--root_path', type=str, default='./data/ETT/', help='root path of the data file')
-    # parser.add_argument('--data_path', type=str, default='ETTh1.csv', help='data file')
-    # parser.add_argument('--features', type=str, default='M',
-    #                     help='forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate')
-    # parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
-    # parser.add_argument('--freq', type=str, default='h',
-    #                     help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    # parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
-
-    # # forecasting task
-    # parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
-    # parser.add_argument('--label_len', type=int, default=48, help='start token length')
-    # parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
-    # parser.add_argument('--seasonal_patterns', type=str, default='Monthly', help='subset for M4')
-    # parser.add_argument('--inverse', action='store_true', help='inverse output data', default=False)
-
-    # # inputation task
-    # parser.add_argument('--mask_rate', type=float, default=0.25, help='mask ratio')
-
-    # # anomaly detection task
-    # parser.add_argument('--anomaly_ratio', type=float, default=0.25, help='prior anomaly ratio (%)')
-
-    # # model define
-    # parser.add_argument('--expand', type=int, default=2, help='expansion factor for Mamba')
-    # parser.add_argument('--d_conv', type=int, default=4, help='conv kernel size for Mamba')
-    # parser.add_argument('--top_k', type=int, default=5, help='for TimesBlock')
-    # parser.add_argument('--num_kernels', type=int, default=6, help='for Inception')
-    # parser.add_argument('--enc_in', type=int, default=7, help='encoder input size')
-    # parser.add_argument('--dec_in', type=int, default=7, help='decoder input size')
-    # parser.add_argument('--c_out', type=int, default=7, help='output size')
-    # parser.add_argument('--d_model', type=int, default=512, help='dimension of model')
-    # parser.add_argument('--n_heads', type=int, default=8, help='num of heads')
-    # parser.add_argument('--e_layers', type=int, default=2, help='num of encoder layers')
-    # parser.add_argument('--d_layers', type=int, default=1, help='num of decoder layers')
-    # parser.add_argument('--d_ff', type=int, default=2048, help='dimension of fcn')
-    # parser.add_argument('--moving_avg', type=int, default=25, help='window size of moving average')
-    # parser.add_argument('--factor', type=int, default=1, help='attn factor')
-    # parser.add_argument('--distil', action='store_false',
-    #                     help='whether to use distilling in encoder, using this argument means not using distilling',
-    #                     default=True)
-    # parser.add_argument('--dropout', type=float, default=0.1, help='dropout')
-    # parser.add_argument('--embed', type=str, default='timeF',
-    #                     help='time features encoding, options:[timeF, fixed, learned]')
-    # parser.add_argument('--activation', type=str, default='gelu', help='activation')
-    # parser.add_argument('--channel_independence', type=int, default=1,
-    #                     help='0: channel dependence 1: channel independence for FreTS model')
-    # parser.add_argument('--decomp_method', type=str, default='moving_avg',
-    #                     help='method of series decompsition, only support moving_avg or dft_decomp')
-    # parser.add_argument('--use_norm', type=int, default=1, help='whether to use normalize; True 1 False 0')
-    # parser.add_argument('--down_sampling_layers', type=int, default=0, help='num of down sampling layers')
-    # parser.add_argument('--down_sampling_window', type=int, default=1, help='down sampling window size')
-    # parser.add_argument('--down_sampling_method', type=str, default=None,
-    #                     help='down sampling method, only support avg, max, conv')
-    # parser.add_argument('--seg_len', type=int, default=48,
-    #                     help='the length of segmen-wise iteration of SegRNN')
-
-    # # optimization
-    # parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
-    # parser.add_argument('--itr', type=int, default=1, help='experiments times')
-    # parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
-    # parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
-    # parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
-    # parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
-    # parser.add_argument('--des', type=str, default='test', help='exp description')
-    # parser.add_argument('--loss', type=str, default='MSE', help='loss function')
-    # parser.add_argument('--lradj', type=str, default='type1', help='adjust learning rate')
-    # parser.add_argument('--use_amp', action='store_true', help='use automatic mixed precision training', default=False)
-
-    # # GPU
-    # parser.add_argument('--use_gpu', type=bool, default=True, help='use gpu')
-    # parser.add_argument('--gpu', type=int, default=0, help='gpu')
-    # parser.add_argument('--use_multi_gpu', action='store_true', help='use multiple gpus', default=False)
-    # parser.add_argument('--devices', type=str, default='0,1,2,3', help='device ids of multile gpus')
-
-    # # de-stationary projector params
-    # parser.add_argument('--p_hidden_dims', type=int, nargs='+', default=[128, 128],
-    #                     help='hidden layer dimensions of projector (List)')
-    # parser.add_argument('--p_hidden_layers', type=int, default=2, help='number of hidden layers in projector')
-
-    # # metrics (dtw)
-    # parser.add_argument('--use_dtw', type=bool, default=False, 
-    #                     help='the controller of using dtw metric (dtw is time consuming, not suggested unless necessary)')
-    
-    # # Augmentation
-    # parser.add_argument('--augmentation_ratio', type=int, default=0, help="How many times to augment")
-    # parser.add_argument('--seed', type=int, default=2, help="Randomization seed")
-    # parser.add_argument('--jitter', default=False, action="store_true", help="Jitter preset augmentation")
-    # parser.add_argument('--scaling', default=False, action="store_true", help="Scaling preset augmentation")
-    # parser.add_argument('--permutation', default=False, action="store_true", help="Equal Length Permutation preset augmentation")
-    # parser.add_argument('--randompermutation', default=False, action="store_true", help="Random Length Permutation preset augmentation")
-    # parser.add_argument('--magwarp', default=False, action="store_true", help="Magnitude warp preset augmentation")
-    # parser.add_argument('--timewarp', default=False, action="store_true", help="Time warp preset augmentation")
-    # parser.add_argument('--windowslice', default=False, action="store_true", help="Window slice preset augmentation")
-    # parser.add_argument('--windowwarp', default=False, action="store_true", help="Window warp preset augmentation")
-    # parser.add_argument('--rotation', default=False, action="store_true", help="Rotation preset augmentation")
-    # parser.add_argument('--spawner', default=False, action="store_true", help="SPAWNER preset augmentation")
-    # parser.add_argument('--dtwwarp', default=False, action="store_true", help="DTW warp preset augmentation")
-    # parser.add_argument('--shapedtwwarp', default=False, action="store_true", help="Shape DTW warp preset augmentation")
-    # parser.add_argument('--wdba', default=False, action="store_true", help="Weighted DBA preset augmentation")
-    # parser.add_argument('--discdtw', default=False, action="store_true", help="Discrimitive DTW warp preset augmentation")
-    # parser.add_argument('--discsdtw', default=False, action="store_true", help="Discrimitive shapeDTW warp preset augmentation")
-    # parser.add_argument('--extra_tag', type=str, default="", help="Anything extra")
-    
-    # args = parser.parse_args()
-    # args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
-    # args.use_gpu = True if torch.cuda.is_available() else False
-
-    run = wandb.init(
-        project="ClusterTracePredictModule",
-        notes = "test wandb",
-        tags = ["test", "wandb"],
-        config = args
-    )
-    # wandb.config = {
-    #     "epochs": args.train_epochs,
-    #     "batch_size": args.batch_size,
-    #     "learning_rate": args.learning_rate,
-    #     "model": args.model,
-    #     "dataset": args.data,
-    #     "loss": args.loss,  
-    #     "dropout": args.dropout,
-    #     "activation": args.activation,
-    #     "seq_len": args.seq_len,
-    #     "label_len": args.label_len,
-    #     "pred_len": args.pred_len,
-    #     "e_layers": args.e_layers,
-    #     "d_layers": args.d_layers,
-    #     "factor": args.factor,
-    #     "enc_in": args.enc_in,
-    #     "dec_in": args.dec_in,
-    #     "c_out": args.c_out,
-    #     "d_model": args.d_model,
-    #     "d_ff": args.d_ff,
-    #     "top_k": args.top_k,
-    #     "itr": args.itr,
-    #     "freq": args.freq,
-    # }
-
     args.use_gpu = True
     print(torch.cuda.is_available())
 
@@ -256,10 +133,17 @@ if __name__ == '__main__':
         device_ids = args.devices.split(',')
         args.device_ids = [int(id_) for id_ in device_ids]
         args.gpu = args.device_ids[0]
-
+    wandb.config = vars(args) 
+    run = wandb.init(
+    project="ClusterTracePredictModule_sweep_lr_BAYES",
+    notes = "timesnet",
+    tags = ["timesnet","lr","dateEmbed","BAYES"],
+    config = wandb.config
+)
+    args = argparse.Namespace(**wandb.config)
+    args.des = run.id
     print('Args in experiment:')
     print_args(args)
-
     if args.task_name == 'long_term_forecast':
         Exp = Exp_Long_Term_Forecast
     elif args.task_name == 'short_term_forecast':
@@ -272,7 +156,6 @@ if __name__ == '__main__':
         Exp = Exp_Classification
     else:
         Exp = Exp_Long_Term_Forecast
-
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
@@ -331,3 +214,6 @@ if __name__ == '__main__':
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
         exp.test(setting, test=1)
         torch.cuda.empty_cache()
+
+if __name__ == '__main__':
+    wandb.agent(sweep_id, function=main, count=64)

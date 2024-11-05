@@ -1,0 +1,1534 @@
+wandb: Using wandb-core as the SDK backend. Please refer to https://wandb.me/wandb-core for more information.
+wandb: Agent Starting Run: ygn31vb6 with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.0001
+wandb: Currently logged in as: alengsourlemon (alengsourlemon-huazhong-university-of-science-and-technology). Use `wandb login --relogin` to force relogin
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_175816-ygn31vb6
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run swept-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/ygn31vb6
+Create sweep with ID: z2ndh8w2
+Sweep URL: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.0001              
+  Des:                ygn31vb6            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_ygn31vb6_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0887912
+	speed: 0.2134s/iter; left time: 555.0904s
+Epoch: 1 cost time: 28.652398824691772
+Epoch: 1, Steps: 135 | Train Loss: 0.1368531 Vali Loss: 0.0437729 Test Loss: 0.0462895
+Validation loss decreased (inf --> 0.043773).  Saving model ...
+Updating learning rate to 0.0001
+	iters: 100, epoch: 2 | loss: 0.0292552
+	speed: 0.3190s/iter; left time: 786.7634s
+Epoch: 2 cost time: 28.00535011291504
+Epoch: 2, Steps: 135 | Train Loss: 0.0402147 Vali Loss: 0.0295953 Test Loss: 0.0284629
+Validation loss decreased (0.043773 --> 0.029595).  Saving model ...
+Updating learning rate to 5e-05
+	iters: 100, epoch: 3 | loss: 0.0511584
+	speed: 0.3199s/iter; left time: 745.7873s
+Epoch: 3 cost time: 27.979231119155884
+Epoch: 3, Steps: 135 | Train Loss: 0.0307448 Vali Loss: 0.0250887 Test Loss: 0.0242261
+Validation loss decreased (0.029595 --> 0.025089).  Saving model ...
+Updating learning rate to 2.5e-05
+	iters: 100, epoch: 4 | loss: 0.0364534
+	speed: 0.3202s/iter; left time: 703.1670s
+Epoch: 4 cost time: 28.06183171272278
+Epoch: 4, Steps: 135 | Train Loss: 0.0276274 Vali Loss: 0.0218516 Test Loss: 0.0208370
+Validation loss decreased (0.025089 --> 0.021852).  Saving model ...
+Updating learning rate to 1.25e-05
+	iters: 100, epoch: 5 | loss: 0.0157799
+	speed: 0.3224s/iter; left time: 664.4241s
+Epoch: 5 cost time: 28.023330688476562
+Epoch: 5, Steps: 135 | Train Loss: 0.0263932 Vali Loss: 0.0210799 Test Loss: 0.0202336
+Validation loss decreased (0.021852 --> 0.021080).  Saving model ...
+Updating learning rate to 6.25e-06
+	iters: 100, epoch: 6 | loss: 0.0501847
+	speed: 0.3204s/iter; left time: 617.0986s
+Epoch: 6 cost time: 28.05264949798584
+Epoch: 6, Steps: 135 | Train Loss: 0.0261435 Vali Loss: 0.0210360 Test Loss: 0.0199044
+Validation loss decreased (0.021080 --> 0.021036).  Saving model ...
+Updating learning rate to 3.125e-06
+	iters: 100, epoch: 7 | loss: 0.0248936
+	speed: 0.3214s/iter; left time: 575.6765s
+Epoch: 7 cost time: 28.037437915802002
+Epoch: 7, Steps: 135 | Train Loss: 0.0259012 Vali Loss: 0.0209046 Test Loss: 0.0197540
+Validation loss decreased (0.021036 --> 0.020905).  Saving model ...
+Updating learning rate to 1.5625e-06
+	iters: 100, epoch: 8 | loss: 0.0239545
+	speed: 0.3232s/iter; left time: 535.2062s
+Epoch: 8 cost time: 28.00740957260132
+Epoch: 8, Steps: 135 | Train Loss: 0.0251941 Vali Loss: 0.0207486 Test Loss: 0.0196705
+Validation loss decreased (0.020905 --> 0.020749).  Saving model ...
+Updating learning rate to 7.8125e-07
+	iters: 100, epoch: 9 | loss: 0.0293711
+	speed: 0.3202s/iter; left time: 487.0725s
+Epoch: 9 cost time: 28.088212490081787
+Epoch: 9, Steps: 135 | Train Loss: 0.0252713 Vali Loss: 0.0207921 Test Loss: 0.0196483
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.90625e-07
+	iters: 100, epoch: 10 | loss: 0.0420969
+	speed: 0.3208s/iter; left time: 444.5756s
+Epoch: 10 cost time: 28.094035625457764
+Epoch: 10, Steps: 135 | Train Loss: 0.0253365 Vali Loss: 0.0207432 Test Loss: 0.0196105
+Validation loss decreased (0.020749 --> 0.020743).  Saving model ...
+Updating learning rate to 1.953125e-07
+	iters: 100, epoch: 11 | loss: 0.0201892
+	speed: 0.3212s/iter; left time: 401.8645s
+Epoch: 11 cost time: 28.093619346618652
+Epoch: 11, Steps: 135 | Train Loss: 0.0252949 Vali Loss: 0.0207318 Test Loss: 0.0196337
+Validation loss decreased (0.020743 --> 0.020732).  Saving model ...
+Updating learning rate to 9.765625e-08
+	iters: 100, epoch: 12 | loss: 0.0384652
+	speed: 0.3208s/iter; left time: 358.0010s
+Epoch: 12 cost time: 28.036438465118408
+Epoch: 12, Steps: 135 | Train Loss: 0.0254679 Vali Loss: 0.0206727 Test Loss: 0.0196132
+Validation loss decreased (0.020732 --> 0.020673).  Saving model ...
+Updating learning rate to 4.8828125e-08
+	iters: 100, epoch: 13 | loss: 0.0515633
+	speed: 0.3208s/iter; left time: 314.6808s
+Epoch: 13 cost time: 28.017650842666626
+Epoch: 13, Steps: 135 | Train Loss: 0.0251979 Vali Loss: 0.0207898 Test Loss: 0.0196140
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.44140625e-08
+	iters: 100, epoch: 14 | loss: 0.0129428
+	speed: 0.3202s/iter; left time: 270.8550s
+Epoch: 14 cost time: 28.118884563446045
+Epoch: 14, Steps: 135 | Train Loss: 0.0252164 Vali Loss: 0.0206871 Test Loss: 0.0196158
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.220703125e-08
+	iters: 100, epoch: 15 | loss: 0.0377973
+	speed: 0.3208s/iter; left time: 228.1104s
+Epoch: 15 cost time: 28.061271905899048
+Epoch: 15, Steps: 135 | Train Loss: 0.0250122 Vali Loss: 0.0206867 Test Loss: 0.0196140
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_ygn31vb6_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.013 MB of 0.013 MB uploadedwandb: \ 0.013 MB of 0.013 MB uploadedwandb: | 0.013 MB of 0.013 MB uploadedwandb: / 0.013 MB of 0.013 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▃▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:     train_loss █▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▄▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01961
+wandb: last_vali_loss 0.02069
+wandb:            mae 903589.625
+wandb:           mape 0.0806
+wandb:            mse 1835031592960.0
+wandb:           mspe 0.01325
+wandb:           rmse 1354633.375
+wandb:      test_loss 0.01961
+wandb:     train_loss 0.02501
+wandb:      vali_loss 0.02069
+wandb: 
+wandb: 🚀 View run swept-sweep-1 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/ygn31vb6
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_175816-ygn31vb6/logs
+wandb: Agent Starting Run: de0lo4ue with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.0005
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_180630-de0lo4ue
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run feasible-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/de0lo4ue
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1835031592960.0, mae:903589.625, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.0005              
+  Des:                de0lo4ue            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_de0lo4ue_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0417452
+	speed: 0.2082s/iter; left time: 541.5672s
+Epoch: 1 cost time: 28.136499881744385
+Epoch: 1, Steps: 135 | Train Loss: 0.0670400 Vali Loss: 0.0275834 Test Loss: 0.0245913
+Validation loss decreased (inf --> 0.027583).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 2 | loss: 0.0204504
+	speed: 0.3177s/iter; left time: 783.3587s
+Epoch: 2 cost time: 27.594138383865356
+Epoch: 2, Steps: 135 | Train Loss: 0.0271128 Vali Loss: 0.0210887 Test Loss: 0.0199944
+Validation loss decreased (0.027583 --> 0.021089).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 3 | loss: 0.0449850
+	speed: 0.3152s/iter; left time: 734.8290s
+Epoch: 3 cost time: 27.592060327529907
+Epoch: 3, Steps: 135 | Train Loss: 0.0223753 Vali Loss: 0.0228567 Test Loss: 0.0209961
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000125
+	iters: 100, epoch: 4 | loss: 0.0296897
+	speed: 0.3144s/iter; left time: 690.5199s
+Epoch: 4 cost time: 27.583160161972046
+Epoch: 4, Steps: 135 | Train Loss: 0.0199246 Vali Loss: 0.0177609 Test Loss: 0.0154745
+Validation loss decreased (0.021089 --> 0.017761).  Saving model ...
+Updating learning rate to 6.25e-05
+	iters: 100, epoch: 5 | loss: 0.0105037
+	speed: 0.3158s/iter; left time: 650.7963s
+Epoch: 5 cost time: 27.61967706680298
+Epoch: 5, Steps: 135 | Train Loss: 0.0186360 Vali Loss: 0.0175184 Test Loss: 0.0155858
+Validation loss decreased (0.017761 --> 0.017518).  Saving model ...
+Updating learning rate to 3.125e-05
+	iters: 100, epoch: 6 | loss: 0.0568229
+	speed: 0.3159s/iter; left time: 608.3414s
+Epoch: 6 cost time: 27.668482065200806
+Epoch: 6, Steps: 135 | Train Loss: 0.0186189 Vali Loss: 0.0170297 Test Loss: 0.0150403
+Validation loss decreased (0.017518 --> 0.017030).  Saving model ...
+Updating learning rate to 1.5625e-05
+	iters: 100, epoch: 7 | loss: 0.0139213
+	speed: 0.3157s/iter; left time: 565.3558s
+Epoch: 7 cost time: 27.601285934448242
+Epoch: 7, Steps: 135 | Train Loss: 0.0186129 Vali Loss: 0.0167556 Test Loss: 0.0148392
+Validation loss decreased (0.017030 --> 0.016756).  Saving model ...
+Updating learning rate to 7.8125e-06
+	iters: 100, epoch: 8 | loss: 0.0140417
+	speed: 0.3148s/iter; left time: 521.2801s
+Epoch: 8 cost time: 27.5565128326416
+Epoch: 8, Steps: 135 | Train Loss: 0.0178762 Vali Loss: 0.0166550 Test Loss: 0.0147603
+Validation loss decreased (0.016756 --> 0.016655).  Saving model ...
+Updating learning rate to 3.90625e-06
+	iters: 100, epoch: 9 | loss: 0.0154648
+	speed: 0.3149s/iter; left time: 478.9785s
+Epoch: 9 cost time: 27.57990574836731
+Epoch: 9, Steps: 135 | Train Loss: 0.0181589 Vali Loss: 0.0166975 Test Loss: 0.0147887
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.953125e-06
+	iters: 100, epoch: 10 | loss: 0.0211495
+	speed: 0.3151s/iter; left time: 436.6983s
+Epoch: 10 cost time: 27.615583658218384
+Epoch: 10, Steps: 135 | Train Loss: 0.0179348 Vali Loss: 0.0166950 Test Loss: 0.0147650
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 9.765625e-07
+	iters: 100, epoch: 11 | loss: 0.0146685
+	speed: 0.3157s/iter; left time: 394.9757s
+Epoch: 11 cost time: 27.635749101638794
+Epoch: 11, Steps: 135 | Train Loss: 0.0178348 Vali Loss: 0.0166803 Test Loss: 0.0147449
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_de0lo4ue_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▅▅▂▂▁▁▁▁▁▁
+wandb:     train_loss █▂▂▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▄▅▂▂▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01474
+wandb: last_vali_loss 0.01668
+wandb:            mae 774426.75
+wandb:           mape 0.07005
+wandb:            mse 1380988092416.0
+wandb:           mspe 0.01014
+wandb:           rmse 1175154.5
+wandb:      test_loss 0.01474
+wandb:     train_loss 0.01783
+wandb:      vali_loss 0.01668
+wandb: 
+wandb: 🚀 View run feasible-sweep-2 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/de0lo4ue
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_180630-de0lo4ue/logs
+wandb: Agent Starting Run: j3ln88mf with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.001
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_181226-j3ln88mf
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run genial-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/j3ln88mf
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1380988092416.0, mae:774426.75, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.001               
+  Des:                j3ln88mf            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_j3ln88mf_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0442006
+	speed: 0.2122s/iter; left time: 552.0073s
+Epoch: 1 cost time: 28.702038526535034
+Epoch: 1, Steps: 135 | Train Loss: 0.0600919 Vali Loss: 0.0232950 Test Loss: 0.0217943
+Validation loss decreased (inf --> 0.023295).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.0184391
+	speed: 0.3251s/iter; left time: 801.5798s
+Epoch: 2 cost time: 28.26839542388916
+Epoch: 2, Steps: 135 | Train Loss: 0.0239809 Vali Loss: 0.0215645 Test Loss: 0.0212611
+Validation loss decreased (0.023295 --> 0.021564).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.0465144
+	speed: 0.3257s/iter; left time: 759.1925s
+Epoch: 3 cost time: 28.412413358688354
+Epoch: 3, Steps: 135 | Train Loss: 0.0206321 Vali Loss: 0.0213496 Test Loss: 0.0188909
+Validation loss decreased (0.021564 --> 0.021350).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.0275570
+	speed: 0.3239s/iter; left time: 711.2223s
+Epoch: 4 cost time: 28.286797761917114
+Epoch: 4, Steps: 135 | Train Loss: 0.0178961 Vali Loss: 0.0166200 Test Loss: 0.0153834
+Validation loss decreased (0.021350 --> 0.016620).  Saving model ...
+Updating learning rate to 0.000125
+	iters: 100, epoch: 5 | loss: 0.0090295
+	speed: 0.3237s/iter; left time: 667.2219s
+Epoch: 5 cost time: 28.282182693481445
+Epoch: 5, Steps: 135 | Train Loss: 0.0165885 Vali Loss: 0.0165174 Test Loss: 0.0151803
+Validation loss decreased (0.016620 --> 0.016517).  Saving model ...
+Updating learning rate to 6.25e-05
+	iters: 100, epoch: 6 | loss: 0.0527486
+	speed: 0.3229s/iter; left time: 621.8431s
+Epoch: 6 cost time: 28.197669982910156
+Epoch: 6, Steps: 135 | Train Loss: 0.0164084 Vali Loss: 0.0162097 Test Loss: 0.0145883
+Validation loss decreased (0.016517 --> 0.016210).  Saving model ...
+Updating learning rate to 3.125e-05
+	iters: 100, epoch: 7 | loss: 0.0139675
+	speed: 0.3227s/iter; left time: 578.0023s
+Epoch: 7 cost time: 28.216864585876465
+Epoch: 7, Steps: 135 | Train Loss: 0.0163103 Vali Loss: 0.0159231 Test Loss: 0.0144002
+Validation loss decreased (0.016210 --> 0.015923).  Saving model ...
+Updating learning rate to 1.5625e-05
+	iters: 100, epoch: 8 | loss: 0.0111134
+	speed: 0.3228s/iter; left time: 534.4746s
+Epoch: 8 cost time: 28.26768207550049
+Epoch: 8, Steps: 135 | Train Loss: 0.0157969 Vali Loss: 0.0157749 Test Loss: 0.0143369
+Validation loss decreased (0.015923 --> 0.015775).  Saving model ...
+Updating learning rate to 7.8125e-06
+	iters: 100, epoch: 9 | loss: 0.0132642
+	speed: 0.3226s/iter; left time: 490.6667s
+Epoch: 9 cost time: 28.226680755615234
+Epoch: 9, Steps: 135 | Train Loss: 0.0159797 Vali Loss: 0.0158435 Test Loss: 0.0142471
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.90625e-06
+	iters: 100, epoch: 10 | loss: 0.0179031
+	speed: 0.3224s/iter; left time: 446.9151s
+Epoch: 10 cost time: 28.207345247268677
+Epoch: 10, Steps: 135 | Train Loss: 0.0156836 Vali Loss: 0.0157991 Test Loss: 0.0142595
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.953125e-06
+	iters: 100, epoch: 11 | loss: 0.0140507
+	speed: 0.3227s/iter; left time: 403.7545s
+Epoch: 11 cost time: 28.25983238220215
+Epoch: 11, Steps: 135 | Train Loss: 0.0155797 Vali Loss: 0.0158104 Test Loss: 0.0142537
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_j3ln88mf_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.003 MB of 0.003 MB uploadedwandb: \ 0.003 MB of 0.003 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss ██▅▂▂▁▁▁▁▁▁
+wandb:     train_loss █▂▂▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▆▆▂▂▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01425
+wandb: last_vali_loss 0.01581
+wandb:            mae 770630.875
+wandb:           mape 0.06886
+wandb:            mse 1341381279744.0
+wandb:           mspe 0.00967
+wandb:           rmse 1158180.125
+wandb:      test_loss 0.01425
+wandb:     train_loss 0.01558
+wandb:      vali_loss 0.01581
+wandb: 
+wandb: 🚀 View run genial-sweep-3 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/j3ln88mf
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_181226-j3ln88mf/logs
+wandb: Agent Starting Run: 9uedkfsf with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.002
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_181833-9uedkfsf
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run expert-sweep-4
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/9uedkfsf
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1341381279744.0, mae:770630.875, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.002               
+  Des:                9uedkfsf            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_9uedkfsf_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0440651
+	speed: 0.2148s/iter; left time: 558.5858s
+Epoch: 1 cost time: 29.06977367401123
+Epoch: 1, Steps: 135 | Train Loss: 0.0617398 Vali Loss: 0.0241963 Test Loss: 0.0223912
+Validation loss decreased (inf --> 0.024196).  Saving model ...
+Updating learning rate to 0.002
+	iters: 100, epoch: 2 | loss: 0.0190562
+	speed: 0.3373s/iter; left time: 831.8951s
+Epoch: 2 cost time: 29.241708993911743
+Epoch: 2, Steps: 135 | Train Loss: 0.0257857 Vali Loss: 0.0244227 Test Loss: 0.0231901
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.001
+	iters: 100, epoch: 3 | loss: 0.0438731
+	speed: 0.3379s/iter; left time: 787.7196s
+Epoch: 3 cost time: 29.242430448532104
+Epoch: 3, Steps: 135 | Train Loss: 0.0213227 Vali Loss: 0.0217542 Test Loss: 0.0190097
+Validation loss decreased (0.024196 --> 0.021754).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 4 | loss: 0.0291592
+	speed: 0.3379s/iter; left time: 742.1182s
+Epoch: 4 cost time: 29.226073026657104
+Epoch: 4, Steps: 135 | Train Loss: 0.0181901 Vali Loss: 0.0159987 Test Loss: 0.0142148
+Validation loss decreased (0.021754 --> 0.015999).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 5 | loss: 0.0087887
+	speed: 0.3379s/iter; left time: 696.3545s
+Epoch: 5 cost time: 29.233999967575073
+Epoch: 5, Steps: 135 | Train Loss: 0.0167952 Vali Loss: 0.0164335 Test Loss: 0.0144213
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000125
+	iters: 100, epoch: 6 | loss: 0.0546708
+	speed: 0.3382s/iter; left time: 651.3224s
+Epoch: 6 cost time: 29.273082494735718
+Epoch: 6, Steps: 135 | Train Loss: 0.0163120 Vali Loss: 0.0156613 Test Loss: 0.0138676
+Validation loss decreased (0.015999 --> 0.015661).  Saving model ...
+Updating learning rate to 6.25e-05
+	iters: 100, epoch: 7 | loss: 0.0126378
+	speed: 0.3383s/iter; left time: 605.9488s
+Epoch: 7 cost time: 29.25356435775757
+Epoch: 7, Steps: 135 | Train Loss: 0.0161314 Vali Loss: 0.0156072 Test Loss: 0.0135111
+Validation loss decreased (0.015661 --> 0.015607).  Saving model ...
+Updating learning rate to 3.125e-05
+	iters: 100, epoch: 8 | loss: 0.0128764
+	speed: 0.3385s/iter; left time: 560.5270s
+Epoch: 8 cost time: 29.287784576416016
+Epoch: 8, Steps: 135 | Train Loss: 0.0157225 Vali Loss: 0.0155045 Test Loss: 0.0133332
+Validation loss decreased (0.015607 --> 0.015505).  Saving model ...
+Updating learning rate to 1.5625e-05
+	iters: 100, epoch: 9 | loss: 0.0138046
+	speed: 0.3379s/iter; left time: 513.9058s
+Epoch: 9 cost time: 29.218339681625366
+Epoch: 9, Steps: 135 | Train Loss: 0.0157988 Vali Loss: 0.0154238 Test Loss: 0.0132656
+Validation loss decreased (0.015505 --> 0.015424).  Saving model ...
+Updating learning rate to 7.8125e-06
+	iters: 100, epoch: 10 | loss: 0.0165662
+	speed: 0.3382s/iter; left time: 468.6844s
+Epoch: 10 cost time: 29.234537601470947
+Epoch: 10, Steps: 135 | Train Loss: 0.0156091 Vali Loss: 0.0153288 Test Loss: 0.0132762
+Validation loss decreased (0.015424 --> 0.015329).  Saving model ...
+Updating learning rate to 3.90625e-06
+	iters: 100, epoch: 11 | loss: 0.0130329
+	speed: 0.3378s/iter; left time: 422.6404s
+Epoch: 11 cost time: 29.22450566291809
+Epoch: 11, Steps: 135 | Train Loss: 0.0153444 Vali Loss: 0.0153863 Test Loss: 0.0132655
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 1.953125e-06
+	iters: 100, epoch: 12 | loss: 0.0229653
+	speed: 0.3379s/iter; left time: 377.0536s
+Epoch: 12 cost time: 29.263206481933594
+Epoch: 12, Steps: 135 | Train Loss: 0.0154046 Vali Loss: 0.0153483 Test Loss: 0.0132588
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 9.765625e-07
+	iters: 100, epoch: 13 | loss: 0.0363245
+	speed: 0.3382s/iter; left time: 331.7342s
+Epoch: 13 cost time: 29.252758979797363
+Epoch: 13, Steps: 135 | Train Loss: 0.0154549 Vali Loss: 0.0153737 Test Loss: 0.0132547
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_9uedkfsf_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss ▇█▅▂▂▁▁▁▁▁▁▁▁
+wandb:     train_loss █▃▂▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss ██▆▂▂▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01325
+wandb: last_vali_loss 0.01537
+wandb:            mae 739753.75
+wandb:           mape 0.06642
+wandb:            mse 1242141032448.0
+wandb:           mspe 0.00903
+wandb:           rmse 1114513.75
+wandb:      test_loss 0.01325
+wandb:     train_loss 0.01545
+wandb:      vali_loss 0.01537
+wandb: 
+wandb: 🚀 View run expert-sweep-4 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/9uedkfsf
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_181833-9uedkfsf/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: 9wk2ksgl with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.005
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_182609-9wk2ksgl
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run wobbly-sweep-5
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/9wk2ksgl
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1242141032448.0, mae:739753.75, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.005               
+  Des:                9wk2ksgl            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_9wk2ksgl_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0429454
+	speed: 0.2197s/iter; left time: 571.4568s
+Epoch: 1 cost time: 29.790273189544678
+Epoch: 1, Steps: 135 | Train Loss: 0.0601714 Vali Loss: 0.0237621 Test Loss: 0.0214637
+Validation loss decreased (inf --> 0.023762).  Saving model ...
+Updating learning rate to 0.005
+	iters: 100, epoch: 2 | loss: 0.0152443
+	speed: 0.3427s/iter; left time: 845.1853s
+Epoch: 2 cost time: 29.76449751853943
+Epoch: 2, Steps: 135 | Train Loss: 0.0291724 Vali Loss: 0.0199830 Test Loss: 0.0220964
+Validation loss decreased (0.023762 --> 0.019983).  Saving model ...
+Updating learning rate to 0.0025
+	iters: 100, epoch: 3 | loss: 0.0478110
+	speed: 0.3416s/iter; left time: 796.3114s
+Epoch: 3 cost time: 29.70014238357544
+Epoch: 3, Steps: 135 | Train Loss: 0.0211058 Vali Loss: 0.0205147 Test Loss: 0.0178742
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.00125
+	iters: 100, epoch: 4 | loss: 0.0279350
+	speed: 0.3413s/iter; left time: 749.5362s
+Epoch: 4 cost time: 29.758050441741943
+Epoch: 4, Steps: 135 | Train Loss: 0.0187078 Vali Loss: 0.0156433 Test Loss: 0.0130690
+Validation loss decreased (0.019983 --> 0.015643).  Saving model ...
+Updating learning rate to 0.000625
+	iters: 100, epoch: 5 | loss: 0.0080539
+	speed: 0.3419s/iter; left time: 704.7176s
+Epoch: 5 cost time: 29.753426790237427
+Epoch: 5, Steps: 135 | Train Loss: 0.0171371 Vali Loss: 0.0154555 Test Loss: 0.0129619
+Validation loss decreased (0.015643 --> 0.015456).  Saving model ...
+Updating learning rate to 0.0003125
+	iters: 100, epoch: 6 | loss: 0.0561441
+	speed: 0.3416s/iter; left time: 657.8617s
+Epoch: 6 cost time: 29.712212324142456
+Epoch: 6, Steps: 135 | Train Loss: 0.0170279 Vali Loss: 0.0146896 Test Loss: 0.0133191
+Validation loss decreased (0.015456 --> 0.014690).  Saving model ...
+Updating learning rate to 0.00015625
+	iters: 100, epoch: 7 | loss: 0.0126136
+	speed: 0.3417s/iter; left time: 612.0618s
+Epoch: 7 cost time: 29.734678745269775
+Epoch: 7, Steps: 135 | Train Loss: 0.0169455 Vali Loss: 0.0146132 Test Loss: 0.0128950
+Validation loss decreased (0.014690 --> 0.014613).  Saving model ...
+Updating learning rate to 7.8125e-05
+	iters: 100, epoch: 8 | loss: 0.0141452
+	speed: 0.3414s/iter; left time: 565.3021s
+Epoch: 8 cost time: 29.690212726593018
+Epoch: 8, Steps: 135 | Train Loss: 0.0164444 Vali Loss: 0.0148531 Test Loss: 0.0127367
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 3.90625e-05
+	iters: 100, epoch: 9 | loss: 0.0132318
+	speed: 0.3411s/iter; left time: 518.8687s
+Epoch: 9 cost time: 29.719792127609253
+Epoch: 9, Steps: 135 | Train Loss: 0.0166610 Vali Loss: 0.0146678 Test Loss: 0.0126288
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.953125e-05
+	iters: 100, epoch: 10 | loss: 0.0201009
+	speed: 0.3412s/iter; left time: 472.8903s
+Epoch: 10 cost time: 29.73651695251465
+Epoch: 10, Steps: 135 | Train Loss: 0.0163220 Vali Loss: 0.0145686 Test Loss: 0.0127214
+Validation loss decreased (0.014613 --> 0.014569).  Saving model ...
+Updating learning rate to 9.765625e-06
+	iters: 100, epoch: 11 | loss: 0.0144213
+	speed: 0.3412s/iter; left time: 426.8661s
+Epoch: 11 cost time: 29.68525981903076
+Epoch: 11, Steps: 135 | Train Loss: 0.0162105 Vali Loss: 0.0146018 Test Loss: 0.0126910
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 4.8828125e-06
+	iters: 100, epoch: 12 | loss: 0.0270409
+	speed: 0.3411s/iter; left time: 380.6547s
+Epoch: 12 cost time: 29.7134690284729
+Epoch: 12, Steps: 135 | Train Loss: 0.0161594 Vali Loss: 0.0146084 Test Loss: 0.0126812
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 2.44140625e-06
+	iters: 100, epoch: 13 | loss: 0.0365646
+	speed: 0.3419s/iter; left time: 335.4100s
+Epoch: 13 cost time: 29.758518934249878
+Epoch: 13, Steps: 135 | Train Loss: 0.0164054 Vali Loss: 0.0146280 Test Loss: 0.0126791
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_9wk2ksgl_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.013 MB of 0.013 MB uploadedwandb: \ 0.013 MB of 0.013 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss ██▅▁▁▂▁▁▁▁▁▁▁
+wandb:     train_loss █▃▂▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▅▆▂▂▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01268
+wandb: last_vali_loss 0.01463
+wandb:            mae 705862.5
+wandb:           mape 0.06302
+wandb:            mse 1190226690048.0
+wandb:           mspe 0.00818
+wandb:           rmse 1090975.125
+wandb:      test_loss 0.01268
+wandb:     train_loss 0.01641
+wandb:      vali_loss 0.01463
+wandb: 
+wandb: 🚀 View run wobbly-sweep-5 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/9wk2ksgl
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_182609-9wk2ksgl/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: br96f8qc with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.01
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_183351-br96f8qc
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run blooming-sweep-6
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/br96f8qc
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1190226690048.0, mae:705862.5, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.01                
+  Des:                br96f8qc            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_br96f8qc_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0414143
+	speed: 0.2225s/iter; left time: 578.8518s
+Epoch: 1 cost time: 30.114582061767578
+Epoch: 1, Steps: 135 | Train Loss: 0.0945366 Vali Loss: 0.0296232 Test Loss: 0.0281606
+Validation loss decreased (inf --> 0.029623).  Saving model ...
+Updating learning rate to 0.01
+	iters: 100, epoch: 2 | loss: 0.0209916
+	speed: 0.3457s/iter; left time: 852.5697s
+Epoch: 2 cost time: 30.014420747756958
+Epoch: 2, Steps: 135 | Train Loss: 0.0279704 Vali Loss: 0.0237014 Test Loss: 0.0233487
+Validation loss decreased (0.029623 --> 0.023701).  Saving model ...
+Updating learning rate to 0.005
+	iters: 100, epoch: 3 | loss: 0.0481024
+	speed: 0.3466s/iter; left time: 807.9664s
+Epoch: 3 cost time: 30.051620721817017
+Epoch: 3, Steps: 135 | Train Loss: 0.0211889 Vali Loss: 0.0174828 Test Loss: 0.0155412
+Validation loss decreased (0.023701 --> 0.017483).  Saving model ...
+Updating learning rate to 0.0025
+	iters: 100, epoch: 4 | loss: 0.0289163
+	speed: 0.3456s/iter; left time: 759.0327s
+Epoch: 4 cost time: 30.013840675354004
+Epoch: 4, Steps: 135 | Train Loss: 0.0186041 Vali Loss: 0.0160254 Test Loss: 0.0140863
+Validation loss decreased (0.017483 --> 0.016025).  Saving model ...
+Updating learning rate to 0.00125
+	iters: 100, epoch: 5 | loss: 0.0090593
+	speed: 0.3453s/iter; left time: 711.6101s
+Epoch: 5 cost time: 29.95268225669861
+Epoch: 5, Steps: 135 | Train Loss: 0.0175170 Vali Loss: 0.0149434 Test Loss: 0.0130316
+Validation loss decreased (0.016025 --> 0.014943).  Saving model ...
+Updating learning rate to 0.000625
+	iters: 100, epoch: 6 | loss: 0.0600680
+	speed: 0.3453s/iter; left time: 665.1233s
+Epoch: 6 cost time: 29.95802140235901
+Epoch: 6, Steps: 135 | Train Loss: 0.0173727 Vali Loss: 0.0143397 Test Loss: 0.0130750
+Validation loss decreased (0.014943 --> 0.014340).  Saving model ...
+Updating learning rate to 0.0003125
+	iters: 100, epoch: 7 | loss: 0.0128768
+	speed: 0.3448s/iter; left time: 617.6133s
+Epoch: 7 cost time: 29.968973636627197
+Epoch: 7, Steps: 135 | Train Loss: 0.0172532 Vali Loss: 0.0141635 Test Loss: 0.0124189
+Validation loss decreased (0.014340 --> 0.014164).  Saving model ...
+Updating learning rate to 0.00015625
+	iters: 100, epoch: 8 | loss: 0.0143674
+	speed: 0.3460s/iter; left time: 573.0494s
+Epoch: 8 cost time: 30.008010625839233
+Epoch: 8, Steps: 135 | Train Loss: 0.0168085 Vali Loss: 0.0144945 Test Loss: 0.0126143
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 7.8125e-05
+	iters: 100, epoch: 9 | loss: 0.0162320
+	speed: 0.3456s/iter; left time: 525.6430s
+Epoch: 9 cost time: 29.945507764816284
+Epoch: 9, Steps: 135 | Train Loss: 0.0169555 Vali Loss: 0.0141577 Test Loss: 0.0123881
+Validation loss decreased (0.014164 --> 0.014158).  Saving model ...
+Updating learning rate to 3.90625e-05
+	iters: 100, epoch: 10 | loss: 0.0235335
+	speed: 0.3457s/iter; left time: 479.2079s
+Epoch: 10 cost time: 29.97375774383545
+Epoch: 10, Steps: 135 | Train Loss: 0.0167025 Vali Loss: 0.0140661 Test Loss: 0.0123159
+Validation loss decreased (0.014158 --> 0.014066).  Saving model ...
+Updating learning rate to 1.953125e-05
+	iters: 100, epoch: 11 | loss: 0.0133335
+	speed: 0.3454s/iter; left time: 432.1209s
+Epoch: 11 cost time: 30.005301475524902
+Epoch: 11, Steps: 135 | Train Loss: 0.0165815 Vali Loss: 0.0140784 Test Loss: 0.0123246
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 9.765625e-06
+	iters: 100, epoch: 12 | loss: 0.0291777
+	speed: 0.3456s/iter; left time: 385.6446s
+Epoch: 12 cost time: 29.959371328353882
+Epoch: 12, Steps: 135 | Train Loss: 0.0166280 Vali Loss: 0.0140842 Test Loss: 0.0123221
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 4.8828125e-06
+	iters: 100, epoch: 13 | loss: 0.0363993
+	speed: 0.3450s/iter; left time: 338.4148s
+Epoch: 13 cost time: 29.954546689987183
+Epoch: 13, Steps: 135 | Train Loss: 0.0166866 Vali Loss: 0.0141086 Test Loss: 0.0123451
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_br96f8qc_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.013 MB of 0.013 MB uploadedwandb: \ 0.013 MB of 0.013 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▆▂▂▁▁▁▁▁▁▁▁▁
+wandb:     train_loss █▂▁▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▅▃▂▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01235
+wandb: last_vali_loss 0.01411
+wandb:            mae 690128.375
+wandb:           mape 0.06162
+wandb:            mse 1152290127872.0
+wandb:           mspe 0.00792
+wandb:           rmse 1073447.75
+wandb:      test_loss 0.01235
+wandb:     train_loss 0.01669
+wandb:      vali_loss 0.01411
+wandb: 
+wandb: 🚀 View run blooming-sweep-6 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/br96f8qc
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_183351-br96f8qc/logs
+wandb: Agent Starting Run: msidnk4u with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.02
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_184129-msidnk4u
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run restful-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/msidnk4u
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1152290127872.0, mae:690128.375, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.02                
+  Des:                msidnk4u            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_msidnk4u_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0785495
+	speed: 0.2169s/iter; left time: 564.1945s
+Epoch: 1 cost time: 29.35089349746704
+Epoch: 1, Steps: 135 | Train Loss: 0.1668405 Vali Loss: 0.0689857 Test Loss: 0.0681389
+Validation loss decreased (inf --> 0.068986).  Saving model ...
+Updating learning rate to 0.02
+	iters: 100, epoch: 2 | loss: 0.0329568
+	speed: 0.3328s/iter; left time: 820.7479s
+Epoch: 2 cost time: 29.022318124771118
+Epoch: 2, Steps: 135 | Train Loss: 0.0426109 Vali Loss: 0.0276463 Test Loss: 0.0264580
+Validation loss decreased (0.068986 --> 0.027646).  Saving model ...
+Updating learning rate to 0.01
+	iters: 100, epoch: 3 | loss: 0.0481481
+	speed: 0.3313s/iter; left time: 772.1943s
+Epoch: 3 cost time: 29.016510725021362
+Epoch: 3, Steps: 135 | Train Loss: 0.0253334 Vali Loss: 0.0184343 Test Loss: 0.0159204
+Validation loss decreased (0.027646 --> 0.018434).  Saving model ...
+Updating learning rate to 0.005
+	iters: 100, epoch: 4 | loss: 0.0311726
+	speed: 0.3318s/iter; left time: 728.6246s
+Epoch: 4 cost time: 29.03583550453186
+Epoch: 4, Steps: 135 | Train Loss: 0.0218446 Vali Loss: 0.0177741 Test Loss: 0.0150200
+Validation loss decreased (0.018434 --> 0.017774).  Saving model ...
+Updating learning rate to 0.0025
+	iters: 100, epoch: 5 | loss: 0.0095268
+	speed: 0.3315s/iter; left time: 683.1889s
+Epoch: 5 cost time: 29.02147626876831
+Epoch: 5, Steps: 135 | Train Loss: 0.0190860 Vali Loss: 0.0152934 Test Loss: 0.0131897
+Validation loss decreased (0.017774 --> 0.015293).  Saving model ...
+Updating learning rate to 0.00125
+	iters: 100, epoch: 6 | loss: 0.0583336
+	speed: 0.3311s/iter; left time: 637.7684s
+Epoch: 6 cost time: 29.007485151290894
+Epoch: 6, Steps: 135 | Train Loss: 0.0183114 Vali Loss: 0.0161866 Test Loss: 0.0138479
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000625
+	iters: 100, epoch: 7 | loss: 0.0145371
+	speed: 0.3309s/iter; left time: 592.6345s
+Epoch: 7 cost time: 29.011088848114014
+Epoch: 7, Steps: 135 | Train Loss: 0.0181467 Vali Loss: 0.0154537 Test Loss: 0.0132229
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.0003125
+	iters: 100, epoch: 8 | loss: 0.0166161
+	speed: 0.3312s/iter; left time: 548.4974s
+Epoch: 8 cost time: 28.99745273590088
+Epoch: 8, Steps: 135 | Train Loss: 0.0175951 Vali Loss: 0.0149843 Test Loss: 0.0128741
+Validation loss decreased (0.015293 --> 0.014984).  Saving model ...
+Updating learning rate to 0.00015625
+	iters: 100, epoch: 9 | loss: 0.0174856
+	speed: 0.3317s/iter; left time: 504.4725s
+Epoch: 9 cost time: 29.029380798339844
+Epoch: 9, Steps: 135 | Train Loss: 0.0176683 Vali Loss: 0.0146392 Test Loss: 0.0125494
+Validation loss decreased (0.014984 --> 0.014639).  Saving model ...
+Updating learning rate to 7.8125e-05
+	iters: 100, epoch: 10 | loss: 0.0226367
+	speed: 0.3317s/iter; left time: 459.7802s
+Epoch: 10 cost time: 29.04662537574768
+Epoch: 10, Steps: 135 | Train Loss: 0.0174181 Vali Loss: 0.0143770 Test Loss: 0.0124354
+Validation loss decreased (0.014639 --> 0.014377).  Saving model ...
+Updating learning rate to 3.90625e-05
+	iters: 100, epoch: 11 | loss: 0.0131565
+	speed: 0.3315s/iter; left time: 414.7267s
+Epoch: 11 cost time: 29.041473150253296
+Epoch: 11, Steps: 135 | Train Loss: 0.0172788 Vali Loss: 0.0143546 Test Loss: 0.0124122
+Validation loss decreased (0.014377 --> 0.014355).  Saving model ...
+Updating learning rate to 1.953125e-05
+	iters: 100, epoch: 12 | loss: 0.0299359
+	speed: 0.3316s/iter; left time: 370.0886s
+Epoch: 12 cost time: 29.07186794281006
+Epoch: 12, Steps: 135 | Train Loss: 0.0173199 Vali Loss: 0.0144063 Test Loss: 0.0124122
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 9.765625e-06
+	iters: 100, epoch: 13 | loss: 0.0396465
+	speed: 0.3315s/iter; left time: 325.2045s
+Epoch: 13 cost time: 29.021262168884277
+Epoch: 13, Steps: 135 | Train Loss: 0.0174864 Vali Loss: 0.0144439 Test Loss: 0.0124370
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 4.8828125e-06
+	iters: 100, epoch: 14 | loss: 0.0057072
+	speed: 0.3316s/iter; left time: 280.5221s
+Epoch: 14 cost time: 29.00580072402954
+Epoch: 14, Steps: 135 | Train Loss: 0.0172799 Vali Loss: 0.0143907 Test Loss: 0.0124184
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_msidnk4u_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.013 MB of 0.013 MB uploadedwandb: \ 0.013 MB of 0.013 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▃▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:     train_loss █▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▃▂▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01242
+wandb: last_vali_loss 0.01439
+wandb:            mae 688475.4375
+wandb:           mape 0.06121
+wandb:            mse 1161304866816.0
+wandb:           mspe 0.00792
+wandb:           rmse 1077638.5
+wandb:      test_loss 0.01242
+wandb:     train_loss 0.01728
+wandb:      vali_loss 0.01439
+wandb: 
+wandb: 🚀 View run restful-sweep-7 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/msidnk4u
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_184129-msidnk4u/logs
+wandb: Agent Starting Run: mr8h4jq1 with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.05
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_184922-mr8h4jq1
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run vivid-sweep-8
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/mr8h4jq1
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1161304866816.0, mae:688475.4375, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.05                
+  Des:                mr8h4jq1            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_mr8h4jq1_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0386022
+	speed: 0.2160s/iter; left time: 561.7782s
+Epoch: 1 cost time: 29.23984384536743
+Epoch: 1, Steps: 135 | Train Loss: 0.1466731 Vali Loss: 0.0553843 Test Loss: 0.0565774
+Validation loss decreased (inf --> 0.055384).  Saving model ...
+Updating learning rate to 0.05
+	iters: 100, epoch: 2 | loss: 0.0154368
+	speed: 0.3366s/iter; left time: 830.0754s
+Epoch: 2 cost time: 29.13551640510559
+Epoch: 2, Steps: 135 | Train Loss: 0.0309860 Vali Loss: 0.0221144 Test Loss: 0.0212229
+Validation loss decreased (0.055384 --> 0.022114).  Saving model ...
+Updating learning rate to 0.025
+	iters: 100, epoch: 3 | loss: 0.0423694
+	speed: 0.3361s/iter; left time: 783.5013s
+Epoch: 3 cost time: 29.17902398109436
+Epoch: 3, Steps: 135 | Train Loss: 0.0204714 Vali Loss: 0.0192408 Test Loss: 0.0172536
+Validation loss decreased (0.022114 --> 0.019241).  Saving model ...
+Updating learning rate to 0.0125
+	iters: 100, epoch: 4 | loss: 0.0301441
+	speed: 0.3366s/iter; left time: 739.2595s
+Epoch: 4 cost time: 29.220419883728027
+Epoch: 4, Steps: 135 | Train Loss: 0.0189882 Vali Loss: 0.0175760 Test Loss: 0.0152385
+Validation loss decreased (0.019241 --> 0.017576).  Saving model ...
+Updating learning rate to 0.00625
+	iters: 100, epoch: 5 | loss: 0.0086172
+	speed: 0.3361s/iter; left time: 692.7313s
+Epoch: 5 cost time: 29.170578002929688
+Epoch: 5, Steps: 135 | Train Loss: 0.0173622 Vali Loss: 0.0149439 Test Loss: 0.0132900
+Validation loss decreased (0.017576 --> 0.014944).  Saving model ...
+Updating learning rate to 0.003125
+	iters: 100, epoch: 6 | loss: 0.0554034
+	speed: 0.3362s/iter; left time: 647.6145s
+Epoch: 6 cost time: 29.20574426651001
+Epoch: 6, Steps: 135 | Train Loss: 0.0168017 Vali Loss: 0.0163392 Test Loss: 0.0153275
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0015625
+	iters: 100, epoch: 7 | loss: 0.0139250
+	speed: 0.3360s/iter; left time: 601.8019s
+Epoch: 7 cost time: 29.173704862594604
+Epoch: 7, Steps: 135 | Train Loss: 0.0166943 Vali Loss: 0.0148860 Test Loss: 0.0131239
+Validation loss decreased (0.014944 --> 0.014886).  Saving model ...
+Updating learning rate to 0.00078125
+	iters: 100, epoch: 8 | loss: 0.0145915
+	speed: 0.3362s/iter; left time: 556.8078s
+Epoch: 8 cost time: 29.174893140792847
+Epoch: 8, Steps: 135 | Train Loss: 0.0161348 Vali Loss: 0.0143449 Test Loss: 0.0124733
+Validation loss decreased (0.014886 --> 0.014345).  Saving model ...
+Updating learning rate to 0.000390625
+	iters: 100, epoch: 9 | loss: 0.0176139
+	speed: 0.3362s/iter; left time: 511.4285s
+Epoch: 9 cost time: 29.182819843292236
+Epoch: 9, Steps: 135 | Train Loss: 0.0161795 Vali Loss: 0.0141310 Test Loss: 0.0125070
+Validation loss decreased (0.014345 --> 0.014131).  Saving model ...
+Updating learning rate to 0.0001953125
+	iters: 100, epoch: 10 | loss: 0.0201511
+	speed: 0.3362s/iter; left time: 465.9687s
+Epoch: 10 cost time: 29.165809392929077
+Epoch: 10, Steps: 135 | Train Loss: 0.0158998 Vali Loss: 0.0138545 Test Loss: 0.0122631
+Validation loss decreased (0.014131 --> 0.013854).  Saving model ...
+Updating learning rate to 9.765625e-05
+	iters: 100, epoch: 11 | loss: 0.0129673
+	speed: 0.3360s/iter; left time: 420.3306s
+Epoch: 11 cost time: 29.178935289382935
+Epoch: 11, Steps: 135 | Train Loss: 0.0157852 Vali Loss: 0.0137641 Test Loss: 0.0122385
+Validation loss decreased (0.013854 --> 0.013764).  Saving model ...
+Updating learning rate to 4.8828125e-05
+	iters: 100, epoch: 12 | loss: 0.0275426
+	speed: 0.3360s/iter; left time: 375.0108s
+Epoch: 12 cost time: 29.171531915664673
+Epoch: 12, Steps: 135 | Train Loss: 0.0160354 Vali Loss: 0.0138585 Test Loss: 0.0123069
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 2.44140625e-05
+	iters: 100, epoch: 13 | loss: 0.0311358
+	speed: 0.3360s/iter; left time: 329.6194s
+Epoch: 13 cost time: 29.19569969177246
+Epoch: 13, Steps: 135 | Train Loss: 0.0158646 Vali Loss: 0.0138786 Test Loss: 0.0122990
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 1.220703125e-05
+	iters: 100, epoch: 14 | loss: 0.0058018
+	speed: 0.3358s/iter; left time: 284.0850s
+Epoch: 14 cost time: 29.166461944580078
+Epoch: 14, Steps: 135 | Train Loss: 0.0158108 Vali Loss: 0.0138351 Test Loss: 0.0122667
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_mr8h4jq1_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▂▂▁▁▁▁▁▁▁▁▁▁▁
+wandb:     train_loss █▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:      vali_loss █▂▂▂▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01227
+wandb: last_vali_loss 0.01384
+wandb:            mae 693710.5
+wandb:           mape 0.06229
+wandb:            mse 1145052200960.0
+wandb:           mspe 0.00823
+wandb:           rmse 1070071.125
+wandb:      test_loss 0.01227
+wandb:     train_loss 0.01581
+wandb:      vali_loss 0.01384
+wandb: 
+wandb: 🚀 View run vivid-sweep-8 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/mr8h4jq1
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_184922-mr8h4jq1/logs
+wandb: Agent Starting Run: 5kgojjyt with config:
+wandb: 	dropout: 0.1
+wandb: 	learning_rate: 0.1
+wandb: WARNING Ignored wandb.init() arg project when running a sweep.
+wandb: Tracking run with wandb version 0.18.5
+wandb: Run data is saved locally in /home/antigone/cluster-trace-predict/ClusterTracePredictModule/wandb/run-20241105_185721-5kgojjyt
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run decent-sweep-9
+wandb: ⭐️ View project at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: 🧹 View sweep at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/sweeps/z2ndh8w2
+wandb: 🚀 View run at https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/5kgojjyt
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1145052200960.0, mae:693710.5, dtw:not calculated
+(3456,)
+(3456,)
+True
+Args in experiment:
+[1mBasic Config[0m
+  Task Name:          long_term_forecast  Is Training:        1                   
+  Model ID:           wandb_grid          Model:              TimesNet            
+
+[1mData Loader[0m
+  Data:               CT2018              Root Path:          /home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/
+  Data Path:          task_type1_CTPF_8640_6912_date.csvFeatures:           S                   
+  Target:             count               Freq:               s                   
+  Checkpoints:        ./checkpoints/      
+
+[1mForecasting Task[0m
+  Seq Len:            64                  Label Len:          1                   
+  Pred Len:           1                   Seasonal Patterns:  Monthly             
+  Inverse:            1                   
+
+[1mModel Parameters[0m
+  Top k:              8                   Num Kernels:        10                  
+  Enc In:             1                   Dec In:             1                   
+  C Out:              1                   d model:            64                  
+  n heads:            8                   e layers:           2                   
+  d layers:           1                   d FF:               16                  
+  Moving Avg:         25                  Factor:             3                   
+  Distil:             1                   Dropout:            0.1                 
+  Embed:              timeF               Activation:         gelu                
+
+[1mRun Parameters[0m
+  Num Workers:        10                  Itr:                1                   
+  Train Epochs:       20                  Batch Size:         128                 
+  Patience:           3                   Learning Rate:      0.1                 
+  Des:                5kgojjyt            Loss:               MSE                 
+  Lradj:              type1               Use Amp:            0                   
+
+[1mGPU[0m
+  Use GPU:            1                   GPU:                0                   
+  Use Multi GPU:      0                   Devices:            0,1,2,3             
+
+[1mDe-stationary Projector Params[0m
+  P Hidden Dims:      128, 128            P Hidden Layers:    2                   
+
+Use GPU: cuda:0
+>>>>>>>start training : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_5kgojjyt_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 17216
+val 3456
+test 3456
+	iters: 100, epoch: 1 | loss: 0.0687508
+	speed: 0.2137s/iter; left time: 555.7113s
+Epoch: 1 cost time: 28.89031147956848
+Epoch: 1, Steps: 135 | Train Loss: 0.2917673 Vali Loss: 0.0718615 Test Loss: 0.0667002
+Validation loss decreased (inf --> 0.071861).  Saving model ...
+Updating learning rate to 0.1
+	iters: 100, epoch: 2 | loss: 0.0530741
+	speed: 0.3302s/iter; left time: 814.2403s
+Epoch: 2 cost time: 28.663161039352417
+Epoch: 2, Steps: 135 | Train Loss: 0.0749740 Vali Loss: 0.0468832 Test Loss: 0.0436719
+Validation loss decreased (0.071861 --> 0.046883).  Saving model ...
+Updating learning rate to 0.05
+	iters: 100, epoch: 3 | loss: 0.0602545
+	speed: 0.3300s/iter; left time: 769.2064s
+Epoch: 3 cost time: 28.66741156578064
+Epoch: 3, Steps: 135 | Train Loss: 0.0357818 Vali Loss: 0.0269595 Test Loss: 0.0246716
+Validation loss decreased (0.046883 --> 0.026959).  Saving model ...
+Updating learning rate to 0.025
+	iters: 100, epoch: 4 | loss: 0.0306364
+	speed: 0.3281s/iter; left time: 720.5275s
+Epoch: 4 cost time: 28.486836194992065
+Epoch: 4, Steps: 135 | Train Loss: 0.0245208 Vali Loss: 0.0224893 Test Loss: 0.0190848
+Validation loss decreased (0.026959 --> 0.022489).  Saving model ...
+Updating learning rate to 0.0125
+	iters: 100, epoch: 5 | loss: 0.0115485
+	speed: 0.3279s/iter; left time: 675.8049s
+Epoch: 5 cost time: 28.465514659881592
+Epoch: 5, Steps: 135 | Train Loss: 0.0205791 Vali Loss: 0.0168098 Test Loss: 0.0163090
+Validation loss decreased (0.022489 --> 0.016810).  Saving model ...
+Updating learning rate to 0.00625
+	iters: 100, epoch: 6 | loss: 0.0620810
+	speed: 0.3259s/iter; left time: 627.6346s
+Epoch: 6 cost time: 28.327853679656982
+Epoch: 6, Steps: 135 | Train Loss: 0.0196262 Vali Loss: 0.0161230 Test Loss: 0.0162798
+Validation loss decreased (0.016810 --> 0.016123).  Saving model ...
+Updating learning rate to 0.003125
+	iters: 100, epoch: 7 | loss: 0.0168486
+	speed: 0.3257s/iter; left time: 583.3241s
+Epoch: 7 cost time: 28.327393770217896
+Epoch: 7, Steps: 135 | Train Loss: 0.0192223 Vali Loss: 0.0165404 Test Loss: 0.0151146
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0015625
+	iters: 100, epoch: 8 | loss: 0.0164678
+	speed: 0.3250s/iter; left time: 538.1902s
+Epoch: 8 cost time: 28.32240104675293
+Epoch: 8, Steps: 135 | Train Loss: 0.0186308 Vali Loss: 0.0165596 Test Loss: 0.0148517
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.00078125
+	iters: 100, epoch: 9 | loss: 0.0212179
+	speed: 0.3258s/iter; left time: 495.5003s
+Epoch: 9 cost time: 28.37993597984314
+Epoch: 9, Steps: 135 | Train Loss: 0.0184484 Vali Loss: 0.0163299 Test Loss: 0.0149125
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : long_term_forecast_wandb_grid_TimesNet_CT2018_ftS_sl64_ll1_pl1_dm64_nh8_el2_dl1_df16_expand2_dc4_fc3_ebtimeF_dtTrue_5kgojjyt_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 3456
+wandb: - 0.011 MB of 0.011 MB uploadedwandb: \ 0.011 MB of 0.011 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: last_test_loss ▁
+wandb: last_vali_loss ▁
+wandb:            mae ▁
+wandb:           mape ▁
+wandb:            mse ▁
+wandb:           mspe ▁
+wandb:           rmse ▁
+wandb:      test_loss █▅▂▂▁▁▁▁▁
+wandb:     train_loss █▂▁▁▁▁▁▁▁
+wandb:      vali_loss █▅▂▂▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb: last_test_loss 0.01491
+wandb: last_vali_loss 0.01633
+wandb:            mae 782301.25
+wandb:           mape 0.06919
+wandb:            mse 1523153633280.0
+wandb:           mspe 0.00996
+wandb:           rmse 1234161.125
+wandb:      test_loss 0.01491
+wandb:     train_loss 0.01845
+wandb:      vali_loss 0.01633
+wandb: 
+wandb: 🚀 View run decent-sweep-9 at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep/runs/5kgojjyt
+wandb: ⭐️ View project at: https://wandb.ai/alengsourlemon-huazhong-university-of-science-and-technology/ClusterTracePredictModule_sweep
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241105_185721-5kgojjyt/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Sweep Agent: Exiting.
+test shape: (3456, 1, 1) (3456, 1, 1)
+test shape: (3456, 1, 1) (3456, 1, 1)
+mse:1523153633280.0, mae:782301.25, dtw:not calculated
+(3456,)
+(3456,)
