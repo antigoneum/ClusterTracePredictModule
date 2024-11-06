@@ -13,8 +13,9 @@ import wandb
 import time
 
 sweep_config = {
+    # "method": "bayes",
     "method": "bayes",
-    "name": "ClusterTracePredictModul_Sweep_grid_lr_after_dateEmbed",
+    "name": "ClusterTracePredictModul_Sweep_bayes_10S",
     "metric": {"name": "last_vali_loss", "goal": "minimize"},
     "parameters": {
         # "batch_size": {"values": [64, 128]},  
@@ -31,14 +32,23 @@ sweep_config = {
         # "dropout": {"values": [0.1]}, #dropout
         "dropout": {"max": 0.5, "min": 0.1, "distribution": "uniform"}, #dropout
         # "num_kernel": {"values": [10, 8,5]},  #卷积核的数量
-        "num_kernel": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
+        "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
         # "train_epochs": {"values": [30, 50]},  #训练的轮数
-        "top_k": {"max" : 20, "min": 3, "distribution": "int_uniform"} ,  #top_k
+        "top_k": {"max" : 16, "min": 3, "distribution": "int_uniform"} ,  #top_k
+        "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
     }
-    
+    # "parameters": {
+    #     "batch_size": {"values": [64]},
+    #     "learning_rate": {"values": [0.051]},
+    #     "seq_len": {"values": [5000]},
+    #     "top_k": {"values": [4]},
+    #     "e_layers": {"values": [3]},
+    #     "d_ff": {"values": [14]},
+    #     "d_model": {"values": [50]},
+    # }
 }
 
-sweep_id = wandb.sweep(sweep_config, project="ClusterTracePredictModule_sweep_BAYES")
+sweep_id = wandb.sweep(sweep_config, project="ClusterTracePredictModule_sweep_BAYES_10S")
 
 def main():
     fix_seed = 2021
@@ -48,10 +58,10 @@ def main():
     args = argparse.Namespace(
         task_name='long_term_forecast',
         is_training=1,
-        model_id='wandb_BAYES',
+        model_id='wandb_BAYES_10S',
         model='TimesNet',
         data= 'CT2018',
-        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/',
+        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame10s/statisiticByCoreTimePreFrame/',
         data_path='task_type1_CTPF_8640_6912_date.csv',
         features='S',
         target='count',
