@@ -12,43 +12,7 @@ import numpy as np
 import wandb
 import time
 
-sweep_config = {
-    # "method": "bayes",
-    "method": "bayes",
-    "name": "ClusterTracePredictModul_Sweep_bayes_25S",
-    "metric": {"name": "last_vali_loss", "goal": "minimize"},
-    "parameters": {
-        # "batch_size": {"values": [64, 128]},  
-        # "learning_rate": {"values": [0.0001, 0.0005, 0.001, 0.002, 0.005, 0.01,0.02,0.05,0.1]},  #学习率
-        "learning_rate": {"max": 0.1, "min": 0.0001, "distribution": "uniform"},
-        # "seq_len": {"values": [64, 16]},  #历史数据长度
-        "seq_len": {"max": 128, "min": 16, "distribution": "q_log_uniform_values", "q":2},
-        # "e_layers": {"values": [2, 3]},   #
-        "e_layers": {"max": 4, "min":1, "distribution": "int_uniform"},   #
-        # "d_model": {"values": [64, 128]},  #卷积层输入的通道数  自编码器
-        "d_model": {"max": 128, "min": 32, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器
-        # "d_ff": {"values": [16, 32]},    #卷积层输出的通道数  自编码器
-        "d_ff": {"max": 32, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器
-        # "dropout": {"values": [0.1]}, #dropout
-        "dropout": {"max": 0.5, "min": 0.1, "distribution": "uniform"}, #dropout
-        # "num_kernel": {"values": [10, 8,5]},  #卷积核的数量
-        "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
-        # "train_epochs": {"values": [30, 50]},  #训练的轮数
-        "top_k": {"max" : 15, "min": 1, "distribution": "int_uniform"} ,  #top_k
-        "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
-    }
-    # "parameters": {
-    #     "batch_size": {"values": [64]},
-    #     "learning_rate": {"values": [0.051]},
-    #     "seq_len": {"values": [5000]},
-    #     "top_k": {"values": [4]},
-    #     "e_layers": {"values": [3]},
-    #     "d_ff": {"values": [14]},
-    #     "d_model": {"values": [50]},
-    # }
-}
 
-sweep_id = wandb.sweep(sweep_config, project="ClusterTracePredictModule_sweep_BAYES_5S")
 
 def main():
     fix_seed = 2021
@@ -57,17 +21,17 @@ def main():
     np.random.seed(fix_seed)
     args = argparse.Namespace(
         task_name='long_term_forecast',
-        is_training=1,
+        is_training=0,
         model_id='wandb_BAYES_10S',
-        model='iTransformer',
+        model='TimesNet',
         data= 'CT2018',
-        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame5s/statisiticByCoreTimePreFrame/',
-        data_path='task_type1_CTPF_8640_6912_date.csv',
+        root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/test_if_ARmodel/',
+        data_path='test1.csv',
         features='S',
         target='count',
         freq='s',
         checkpoints='./checkpoints/',
-        seq_len=64,
+        seq_len=16,
         label_len=1,
         pred_len=1,
         seasonal_patterns='Monthly',
@@ -81,11 +45,11 @@ def main():
         enc_in=1,     #数据的特征维度
         dec_in=1,
         c_out=1,
-        d_model=64,   #卷积层输出的通道数
+        d_model=54,   #卷积层输出的通道数
         n_heads=8,
-        e_layers=2,   #timesBlock的数量
+        e_layers=3,   #timesBlock的数量
         d_layers=1,
-        d_ff=16,     #卷积层输出的通道数
+        d_ff=24,     #卷积层输出的通道数
         moving_avg=25,
         factor=3,
         distil=True,
@@ -145,9 +109,9 @@ def main():
         args.gpu = args.device_ids[0]
     wandb.config = vars(args) 
     run = wandb.init(
-    project="ClusterTracePredictModule_sweep_lr_BAYES_25S",
-    notes = "iTransformer",
-    tags = ["iTransformer","lr","dateEmbed","BAYES"],
+    project="ClusterTracePredictModule_sweep_lr_BAYES_testAR",
+    notes = "timesnet",
+    tags = ["timesnet","lr","dateEmbed","BAYES","testAR"],
     config = wandb.config
 )
     args = argparse.Namespace(**wandb.config)
@@ -222,8 +186,8 @@ def main():
 
         exp = Exp(args)  # set experiments
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
-        exp.test(setting, test=1)
+        exp.test("test_if_ARmodel", test=1)
         torch.cuda.empty_cache()
 
 if __name__ == '__main__':
-    wandb.agent(sweep_id, function=main, count=64)
+    main()
