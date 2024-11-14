@@ -811,7 +811,8 @@ class Dataset_Cluster_Trace_2018(Dataset):
         if self.scale:
             train_data = df_data[border1s[0]:border2s[0]]
             self.scaler.fit(train_data.values)
-            data = self.scaler.transform(df_data.values)  #数据归一化
+            data = self.scaler.transform(df_data.values)
+            # print("datatype",data[-1,:].dtype)
         else:
             data = df_data.values
 

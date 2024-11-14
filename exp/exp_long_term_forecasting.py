@@ -13,8 +13,21 @@ from utils.dtw_metric import dtw,accelerated_dtw
 from utils.augmentation import run_augmentation,run_augmentation_single
 import wandb
 warnings.filterwarnings('ignore')
+class MAPELoss(nn.Module):
+    def __init__(self):
+        super(MAPELoss, self).__init__()
 
-
+    def forward(self, pred, target):
+        epsilon = 1e-9  # 防止除零
+        loss = torch.abs((target - pred) / (target + epsilon))
+        return torch.mean(loss)
+# class MSEwithPenalty(nn.Module):
+#     def __init__(self):
+#         super(MSEwithPenalty, self).__init__()
+#     def forward(self, pred, target):
+#         epsilon = 1e-9
+#         loss = nn.MSELoss()
+#         return loss(pred, target) + torch.abs((target - pred) / (target + epsilon))
 class Exp_Long_Term_Forecast(Exp_Basic):
     def __init__(self, args):
         super(Exp_Long_Term_Forecast, self).__init__(args)
@@ -35,7 +48,13 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         return model_optim
 
     def _select_criterion(self):
-        criterion = nn.MSELoss()
+        if self.args.loss == 'MSE':
+            criterion = nn.MSELoss()
+        elif self.args.loss == 'MAPE':
+            criterion = MAPELoss()
+        # criterion = nn.MSELoss()
+        # criterion = nn.L1Loss()
+        # criterion = MAPELoss()
         return criterion
 
     def vali(self, vali_data, vali_loader, criterion):
@@ -72,6 +91,9 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         return total_loss
 
     def train(self, setting):
+        if self.args.model == 'ARIMA':
+            print("ARIMA model does not need to be trained")
+            return
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
@@ -163,8 +185,10 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         self.model.load_state_dict(torch.load(best_model_path))
 
         return self.model
-
     def test(self, setting, test=0):
+        if self.args.model == 'ARIMA':
+            self.test_arima(setting, test)
+            return
         test_data, test_loader = self._get_data(flag='test')
         if test:
             print('loading model')
@@ -184,7 +208,11 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
+                # batch_x = batch_x.double().to(self.device)
+                # batch_y = batch_y.double().to(self.device)
 
+                # batch_x_mark = batch_x_mark.double().to(self.device)
+                # batch_y_mark = batch_y_mark.double().to(self.device)
                 # decoder input
                 dec_inp = torch.zeros_like(batch_y[:, -self.args.pred_len:, :]).float()
                 dec_inp = torch.cat([batch_y[:, :self.args.label_len, :], dec_inp], dim=1).float().to(self.device)
@@ -204,7 +232,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     shape = outputs.shape
                     outputs = test_data.inverse_transform(outputs.reshape(shape[0] * shape[1], -1)).reshape(shape)
                     batch_y = test_data.inverse_transform(batch_y.reshape(shape[0] * shape[1], -1)).reshape(shape)
-        
                 outputs = outputs[:, :, f_dim:]
                 batch_y = batch_y[:, :, f_dim:]
 
@@ -258,7 +285,51 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         f.write('\n')
         f.write('\n')
         f.close()
+        np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
+        np.save(folder_path + 'pred.npy', preds)
+        np.save(folder_path + 'true.npy', trues)
+        visual_full_scale(trues, preds,plot_step=None,name =  os.path.join(folder_path, 'fullScale.png'), mode='concate', random=False, sample_num=5)
+        return
 
+
+    def test_arima(self, setting, test=0):
+        test_data, test_loader = self._get_data(flag='test')
+        preds = []
+        trues = []
+        folder_path = './test_results/' + setting + '_arima'+'/'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+        for i, (x, y,_,_) in enumerate(test_loader):
+            y = y[:, -self.args.pred_len:, :]
+            print("batch:", i)
+            pred = self.model(x)
+            if test_data.scale and self.args.inverse:   
+                shape = pred.shape
+                pred = test_data.inverse_transform(pred.reshape(shape[0] * shape[1], -1)).reshape(shape)
+                y = test_data.inverse_transform(y.reshape(shape[0] * shape[1], -1)).reshape(shape)
+            preds.append(pred)
+            trues.append(y)
+
+        preds = np.concatenate(preds, axis=0)
+        trues = np.concatenate(trues, axis=0)
+        print('test shape:', preds.shape, trues.shape)
+        preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
+        trues = trues.reshape(-1, trues.shape[-2], trues.shape[-1])
+        print('test shape:', preds.shape, trues.shape)
+        # result save
+        folder_path = './results/' + setting+ '_arima' + '/'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)            
+
+        mae, mse, rmse, mape, mspe = metric(preds, trues)
+        wandb.log({"mae": mae, "mse": mse, "rmse": rmse, "mape": mape, "mspe": mspe})
+        print('mse:{}, mae:{}'.format(mse, mae))
+        f = open("result_long_term_forecast.txt", 'a')
+        f.write(setting + "  \n")
+        f.write('mse:{}, mae:{}'.format(mse, mae))
+        f.write('\n')
+        f.write('\n')
+        f.close()
         np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
         np.save(folder_path + 'pred.npy', preds)
         np.save(folder_path + 'true.npy', trues)
