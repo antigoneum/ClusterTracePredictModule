@@ -65,6 +65,16 @@ class Model(nn.Module):
                 out = layer(out)
             return out
         else:
-            raise NotImplementedError
+            outs = None
+            # raise NotImplementedError
+            for step in range(self.pred_len):
+                if step == 0:
+                    out, h= self.gru(x)
+                    outs = out
+                else:
+                    out, h = self.gru(out, h)
+                    outs = torch.cat([outs, out], dim = 1)
+            return outs
+
 
         

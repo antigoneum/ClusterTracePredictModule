@@ -324,7 +324,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         mae, mse, rmse, mape, mspe = metric(preds, trues)
         wandb.log({"mae": mae, "mse": mse, "rmse": rmse, "mape": mape, "mspe": mspe})
-        print('mse:{}, mae:{}'.format(mse, mae))
+        print('mse:{}, mae:{}, mape{}'.format(mse, mae,mape))
         f = open("result_long_term_forecast.txt", 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mae:{}'.format(mse, mae))
