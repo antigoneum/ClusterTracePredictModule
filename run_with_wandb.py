@@ -11,42 +11,43 @@ import random
 import numpy as np
 import wandb
 import time
-run_project_name = "ARIMA"
-run_notes = "ARIMA"
-run_tags = ["ARIMA"]
-sweep_name = "25SCTPF_grid_seq_len4096"
+run_project_name = "GRU"
+run_notes = "GRU"
+run_tags = ["GRU"]
+sweep_name = "25SCTPF_test"
 
 
 
 sweep_config = {
     # "method": "bayes",
-    "method": "grid",
+    "method": "bayes",
     "name": f"{sweep_name}",
-    "metric": {"name": "mape", "goal": "minimize"},
+    "metric": {"name": "last_vali_loss", "goal": "minimize"},
     "parameters": {
-        # # "batch_size": {"values": [64, 128]},  
-        # # "learning_rate": {"values": [0.0001, 0.0005, 0.001, 0.002, 0.005, 0.01,0.02,0.05,0.1]},  #学习率
-        # "learning_rate": {"max": 0.1, "min": 0.0001, "distribution": "uniform"},
-        # # "learning_rate": {"values" : [0.0725]},  #学习率
-        # # "seq_len": {"values": [4096]},  #历史数据长度
-        # "seq_len": {"max": 4096, "min": 8, "distribution": "int_uniform"},  #历史数据长度
-        # # "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   #
-        # # "d_model": {"max": 1024, "min": 128, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器
-        # # "d_ff": {"max": 4096, "min": 1024, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器
-        # # "dropout": {"values": [0.6]}, #dropout
-        # "dropout": {"max": 0.9, "min": 0.1, "distribution": "uniform"}, #dropout
-        # # "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
-        # # "train_epochs": {"values": [30, 50]},  #训练的轮数
-        # # "top_k": {"max" : 15, "min": 1, "distribution": "int_uniform"} ,  #top_k
-        # "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
-        # # "lradj": {"values": ["type1"]},  #学习率调整方式 type1砍半, type2按字典调整 
-        # # "factor": {"max" : 6 , "min": 2},  #注意力因子
-        # # "moving_avg": {"values": list(range(3,33,2))},  #滑动平均
+        # "batch_size": {"values": [64, 128]},  
+        # "learning_rate": {"values": [0.0001, 0.0005, 0.001, 0.002, 0.005, 0.01,0.02,0.05,0.1]},  #学习率
+        "learning_rate": {"max": 0.1, "min": 0.0001, "distribution": "uniform"},
+        # "learning_rate": {"values" : [0.0725]},  #学习率
+        # "seq_len": {"values": [4096]},  #历史数据长度
+        "seq_len": {"max": 4096, "min": 8, "distribution": "int_uniform"},  #历史数据长度
+        "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   #GRU层数
+        "d_model": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器 GRU隐藏层宽度
+        "d_layers": {"max": 3, "min": 1, "distribution": "int_uniform"},  #GRUMLP层数
+        "d_ff": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器  GRUMLP层的宽度
+        # "dropout": {"values": [0.6]}, #dropout
+        "dropout": {"max": 0.9, "min": 0.1, "distribution": "uniform"}, #dropout
+        # "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
+        # "train_epochs": {"values": [30, 50]},  #训练的轮数
+        # "top_k": {"max" : 15, "min": 1, "distribution": "int_uniform"} ,  #top_k
+        "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
+        # "lradj": {"values": ["type1"]},  #学习率调整方式 type1砍半, type2按字典调整 
+        # "factor": {"max" : 6 , "min": 2},  #注意力因子
+        # "moving_avg": {"values": list(range(3,33,2))},  #滑动平均
         # "loss": {"values": ["MSE"]},  #损失函数
-        "p_arima" :{"values": [0,1,2]},
-        "d_arima" :{"values": [0,1,2]},
-        "q_arima" :{"values": [0,1,2]},
-        "seq_len": {"values": [4096]},  #历史数据长度
+        # "p_arima" :{"values": [0,1,2]},
+        # "d_arima" :{"values": [0,1,2]},
+        # "q_arima" :{"values": [0,1,2]},
+        # "seq_len": {"values": [4096]},  #历史数据长度
     }
 }
 
@@ -61,7 +62,7 @@ def main():
         task_name='long_term_forecast',
         is_training=1,
         model_id='wandb_BAYES_25S_TF',
-        model='ARIMA',
+        model='GRU',
         data= 'CT2018',
         root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/',
         data_path='task_type1_CTPF_8640_6912_date.csv',

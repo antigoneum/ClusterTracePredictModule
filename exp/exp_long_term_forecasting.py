@@ -143,7 +143,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         train_loss.append(loss.item())
                 else:
                     outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-
                     f_dim = -1 if self.args.features == 'MS' else 0
                     outputs = outputs[:, -self.args.pred_len:, f_dim:]
                     batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
@@ -299,7 +298,9 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         folder_path = './test_results/' + setting + '_arima'+'/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        for i, (x, y,_,_) in enumerate(test_loader):
+        for i, (x, y,x_mark,y_mark) in enumerate(test_loader):
+            # print(x_mark)
+            # print(y_mark)
             y = y[:, -self.args.pred_len:, :]
             print("batch:", i)
             pred = self.model(x)
