@@ -38,7 +38,7 @@ class EarlyStopping:
         self.delta = delta
 
     def __call__(self, val_loss, model, path):
-        if torch.isnan(val_loss):
+        if np.isnan(val_loss):
             self.early_stop = True
             print('EarlyStopping: val_loss is nan!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         score = -val_loss

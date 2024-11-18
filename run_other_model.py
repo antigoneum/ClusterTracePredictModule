@@ -11,12 +11,12 @@ import random
 import numpy as np
 import wandb
 import time
-run_project_name = "GRU"
-run_notes = "GRU"
-run_tags = ["GRU"]
-sweep_name = "25SCTPF_test"
+run_project_name = "DLiner_25CTPF_pre1_diff"
+run_notes = "DLiner"
+run_tags = ["DLiner"]
+sweep_name = "DLiner_25CTPF_pre1_diff"
 
-
+# os.environ['WANDB_MODE'] = 'offline'
 
 sweep_config = {
     # "method": "bayes",
@@ -30,20 +30,20 @@ sweep_config = {
         # "learning_rate": {"values" : [0.0725]},  #学习率
         # "seq_len": {"values": [4096]},  #历史数据长度
         "seq_len": {"max": 4096, "min": 8, "distribution": "int_uniform"},  #历史数据长度
-        "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   #GRU层数
-        "d_model": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器 GRU隐藏层宽度
-        "d_layers": {"max": 3, "min": 1, "distribution": "int_uniform"},  #GRUMLP层数
-        "d_ff": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器  GRUMLP层的宽度
+        "pred_len": {"values": [1]},  #预测的长度
+        # "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   
+        # "d_model": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器 
+        # "d_layers": {"max": 3, "min": 1, "distribution": "int_uniform"}, 
+        # "d_ff": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器 
         # "dropout": {"values": [0.6]}, #dropout
         "dropout": {"max": 0.9, "min": 0.1, "distribution": "uniform"}, #dropout
         # "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
         # "train_epochs": {"values": [30, 50]},  #训练的轮数
-        # "top_k": {"max" : 15, "min": 1, "distribution": "int_uniform"} ,  #top_k
+        # "top_k": {"max" : 12, "min": 5, "distribution": "int_uniform"} ,  #top_k
         "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
-        # "lradj": {"values": ["type1"]},  #学习率调整方式 type1砍半, type2按字典调整 
         # "factor": {"max" : 6 , "min": 2},  #注意力因子
         # "moving_avg": {"values": list(range(3,33,2))},  #滑动平均
-        # "loss": {"values": ["MSE"]},  #损失函数
+        "loss": {"values": ["MAPE"]},  #损失函数
         # "p_arima" :{"values": [0,1,2]},
         # "d_arima" :{"values": [0,1,2]},
         # "q_arima" :{"values": [0,1,2]},
@@ -62,16 +62,16 @@ def main():
         task_name='long_term_forecast',
         is_training=1,
         model_id='wandb_BAYES_25S_TF',
-        model='GRU',
+        model='DLinear',
         data= 'CT2018',
         root_path='/home/antigone/cluster-trace-predict/ClusterTracePredictModule/dataset/cluster_trace_2018/statisticsByCoreTimePreFrame/dataSampleFrame25s/statisiticByCoreTimePreFrame/',
-        data_path='task_type1_CTPF_8640_6912_date.csv',
+        data_path='task_type1_CTPF_8640_6912_date_diff1.csv',
         features='S',
-        target='count',
+        target='count_diff',
         freq='s',
         checkpoints='./checkpoints/',
         seq_len=96,
-        label_len=1,
+        label_len=0,
         pred_len=1,
         seasonal_patterns='Monthly',
         inverse=True,   #是否对数据进行还原
@@ -79,7 +79,7 @@ def main():
         anomaly_ratio=0.25,
         expand=2,
         d_conv=4,
-        top_k=8,
+        top_k=5,
         num_kernels=10,   #卷积核的数量
         enc_in=1,     #数据的特征维度
         dec_in=1,
@@ -140,7 +140,11 @@ def main():
         patch_len = 16,  # TimeXer
         p_arima = 1, # arima
         d_arima = 1, # arima
-        q_arima = 1 # arima
+        q_arima = 1, # arima
+        gru_layer = 1,
+        gru_hidden_size = 128,
+        gru_mlp_layers = 2,
+        gru_mlp_size = 128,
     )
     args.use_gpu = True
     print(torch.cuda.is_available())
