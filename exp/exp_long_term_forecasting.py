@@ -311,7 +311,15 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 y = test_data.inverse_transform(y.reshape(shape[0] * shape[1], -1)).reshape(shape)
             preds.append(pred)
             trues.append(y)
-
+            if i % 5 == 0:
+                true = y
+                input = x
+                if test_data.scale and self.args.inverse:
+                    shape = input.shape
+                    input = test_data.inverse_transform(input.reshape(shape[0] * shape[1], -1)).reshape(shape)
+                gt = np.concatenate((input[0, :, -1], true[0, :, -1]), axis=0)
+                pd = np.concatenate((input[0, :, -1], pred[0, :, -1]), axis=0)
+                visual(gt, pd, os.path.join(folder_path, str(i) + '.pdf'))
         preds = np.concatenate(preds, axis=0)
         trues = np.concatenate(trues, axis=0)
         print('test shape:', preds.shape, trues.shape)
