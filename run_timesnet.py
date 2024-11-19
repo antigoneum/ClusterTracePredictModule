@@ -11,10 +11,10 @@ import random
 import numpy as np
 import wandb
 import time
-run_project_name = "TimeXer_25CTPF_multiFuture"
-run_notes = "timexer"
-run_tags = ["timexer"]
-sweep_name = "Timexer_25CTPF_pre1_sumFeature"
+run_project_name = "TimesNet_25CTPF_multiFuture"
+run_notes = "timesnet"
+run_tags = ["timesnet"]
+sweep_name = "TimesNet_25CTPF_pre1_sumFeature"
 
 # os.environ['WANDB_MODE'] = 'offline'
 
@@ -29,20 +29,19 @@ sweep_config = {
         "learning_rate": {"max": 0.1, "min": 0.0001, "distribution": "uniform"},
         # "learning_rate": {"values" : [0.0725]},  #学习率
         # "seq_len": {"values": [4096]},  #历史数据长度
-        "seq_len": {"max": 86, "min": 8, "distribution": "int_uniform"},  #历史数据长度
+        "seq_len": {"max": 64, "min": 8, "distribution": "int_uniform"},  #历史数据长度
         "pred_len": {"values": [1]},  #预测的长度
-        "e_layers": {"values": [1]},
-        # "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   
-        "d_model": {"max": 384, "min": 128, "distribution": "q_log_uniform_values", "q":1},  #卷积层输入的通道数  自编码器 
-        # "d_layers": {"max": 3, "min": 1, "distribution": "int_uniform"}, 
-        "d_ff": {"max": 1024, "min": 256, "distribution": "q_log_uniform_values", "q":1},    #卷积层输出的通道数  自编码器 
+        "e_layers": {"max": 3, "min":1, "distribution": "int_uniform"},   
+        "d_model": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},  #卷积层输入的通道数  自编码器 
+        "d_layers": {"max": 3, "min": 1, "distribution": "int_uniform"}, 
+        "d_ff": {"max": 128, "min": 8, "distribution": "q_log_uniform_values", "q":2},    #卷积层输出的通道数  自编码器 
         # "dropout": {"values": [0.6]}, #dropout
         "dropout": {"max": 0.9, "min": 0.1, "distribution": "uniform"}, #dropout
-        # "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
+        "num_kernels": {"max": 10, "min": 5, "distribution": "int_uniform"},  #卷积核的数量
         # "train_epochs": {"values": [30, 50]},  #训练的轮数
-        # "top_k": {"max" : 12, "min": 5, "distribution": "int_uniform"} ,  #top_k
+        "top_k": {"max" : 12, "min": 5, "distribution": "int_uniform"} ,  #top_k
         "lradj": {"values": ["type1","cosine"]},  #学习率调整方式 type1砍半, type2按字典调整
-        "factor": {"max" : 6 , "min": 2},  #注意力因子
+        # "factor": {"max" : 6 , "min": 2},  #注意力因子
         # "moving_avg": {"values": list(range(3,33,2))},  #滑动平均
         "loss": {"values": ["MSE"]},  #损失函数
         # "p_arima" :{"values": [0,1,2]},
